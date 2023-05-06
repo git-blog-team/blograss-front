@@ -1,0 +1,61 @@
+{
+  "name": "my-boilerplate",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.8",
+    "@emotion/styled": "^11.10.8",
+    "@reduxjs/toolkit": "^1.9.5",
+    "@tanstack/react-query": "^4.29.5",
+    "@tanstack/react-query-devtools": "^4.16.1",
+    "@toast-ui/editor": "^3.2.2",
+    "@toast-ui/react-editor": "^3.2.3",
+    "@types/node": "18.16.3",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.1",
+    "axios": "^1.4.0",
+    "dayjs": "^1.11.7",
+    "dompurify": "^3.0.2",
+    "emotion-reset": "^3.0.1",
+    "js-cookie": "^3.0.1",
+    "lodash": "^4.17.21",
+    "next": "13.3.2",
+    "next-redux-wrapper": "^8.1.0",
+    "prettier": "^2.8.8",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-redux": "^8.0.5",
+    "redux-logger": "^3.0.6",
+    "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^3.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "eslint": "^8.0.1",
+    "eslint-config-next": "13.3.2",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-standard-with-typescript": "^34.0.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.32.2",
+    "husky": "4",
+    "lint-staged": "^13.2.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.ts,tsx": [
+      "npx eslint '**/*.ts,tsx'"
+    ]
+  }
+}
