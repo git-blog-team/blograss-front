@@ -1,3 +1,4 @@
+import CheckBox from '@/components/commons/CheckBox';
 import { decrement, increment } from '@/store/exampleSlice';
 import { RootState } from '@/store/store';
 import Head from 'next/head';
@@ -36,6 +37,18 @@ export default function Home() {
             >
                 -
             </button>
+            {/* 체크박스 테스트 */}
+            <CheckBox
+                label={'안녕하세요'}
+                labelPosition={'left'}
+                fontSize={'13px'}
+                fontColor={'gray'}
+                boxSize={'small'}
+                accentColor={'limegreen'}
+                borderSize={'2px'}
+                borderColor={'lightgray'}
+                radius={'4px'}
+            />
         </>
     );
 }
