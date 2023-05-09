@@ -9,6 +9,8 @@ const colors = {
     black: '#000000',
     white: '#FFFFFF',
     light_orange_gray: '#eeeeee',
+    light_gray: '#f2f2f2',
+    txt_gray: '#b2b2b2',
 };
 
 const theme = {
