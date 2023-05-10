@@ -1,10 +1,10 @@
 import { css } from '@emotion/react';
-import emotionReset from 'emotion-reset';
+import reset from 'react-style-reset';
 
 import { CustomThemeType } from '@/styles/theme';
 
 export const globalStyles = (props: CustomThemeType) => css`
-    ${emotionReset};
+    ${reset};
 `;
 
 export default globalStyles;

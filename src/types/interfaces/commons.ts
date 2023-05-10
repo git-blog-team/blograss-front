@@ -13,3 +13,10 @@ export interface IDropDownProps {
     onChange: (value: ValueType<any, any>, name: string) => void;
     direction?: MenuPlacement;
 }
+
+// navigation
+export interface INaviMenuItem {
+    id: number;
+    name: string;
+    path: string;
+}

@@ -7,6 +7,7 @@ import { AppProps } from 'next/app';
 import { Provider } from 'react-redux'; // reduximport { store } from '@/store/store';
 import { store } from '@/store/store';
 import theme from '@/styles/theme';
+import Layout from '@/layout/Layout';
 
 export default function App({ Component, pageProps }: AppProps) {
     const queryClient = new QueryClient({
@@ -22,7 +23,9 @@ export default function App({ Component, pageProps }: AppProps) {
             <Provider store={store}>
                 <QueryClientProvider client={queryClient}>
                     <Global styles={globalStyles} />
-                    <Component {...pageProps} />
+                    <Layout>
+                        <Component {...pageProps} />
+                    </Layout>
                     <ReactQueryDevtools position={'bottom-right'} />
                 </QueryClientProvider>
             </Provider>
