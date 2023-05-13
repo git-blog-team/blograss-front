@@ -20,3 +20,28 @@ export interface INaviMenuItem {
     name: string;
     path: string;
 }
+
+export interface IInputProps {
+    type?: 'text' | 'password' | 'number' | 'email';
+    placeholder?: string;
+    id?: string;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    value?: string;
+    width?: string;
+    height?: string;
+    padding?: string;
+    border?: string;
+    margin?: string;
+    fontSize?: string;
+    color?: string;
+}
+
+export interface IStyledInputProps {
+    width?: string;
+    height?: string;
+    padding?: string;
+    border?: string;
+    margin?: string;
+    fontSize?: string;
+    color?: string;
+}

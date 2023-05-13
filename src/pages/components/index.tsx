@@ -21,7 +21,6 @@ export default function Components() {
                 onChange={onChangeInput}
                 value={email}
             />
-            {email}
             <button onClick={onClick}>초기화</button>
         </div>
     );
