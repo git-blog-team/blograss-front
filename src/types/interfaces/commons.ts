@@ -37,6 +37,9 @@ export interface IInputProps {
     borderRadius?: string;
     status?: 'error' | undefined | '';
     children?: React.ReactNode;
+    isSearch?: boolean;
+    onClickReset?: () => void;
+    onClickSearch?: () => void;
 }
 
 export interface IStyledInputProps {

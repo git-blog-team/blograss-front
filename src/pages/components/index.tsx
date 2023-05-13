@@ -8,15 +8,27 @@ export default function Components() {
         setEmail(event.target.value);
     };
 
-    const onClick = () => {
+    const onClickSearch = () => {
+        alert('검색');
+    };
+
+    const onClickReset = () => {
         setEmail('');
     };
     return (
         <div>
             <h1> 컴포넌트 테스트 페이지</h1>
-            <label htmlFor="textInput"></label>
-            <Input placeholder="이메일">
-                <div>fdsa</div>
+            <Input
+                placeholder="이메일"
+                isSearch={true}
+                width="300px"
+                onChange={onChangeInput}
+                value={email}
+                onClickReset={onClickReset}
+                onClickSearch={onClickSearch}
+                status={email ? 'error' : ''}
+            >
+                라벨텍스트입니다
             </Input>
         </div>
     );
