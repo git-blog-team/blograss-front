@@ -59,5 +59,9 @@
       "pre-commit": "lint-staged"
     }
   },
-  "lint-staged": "next lint"
+  "lint-staged": {
+    "**/*.ts,tsx,js,jsx": [
+      "yarn lint'"
+    ]
+  }
 }
