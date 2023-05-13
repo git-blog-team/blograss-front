@@ -1,14 +1,7 @@
-import { decrement, increment } from '@/store/exampleSlice';
-import { RootState } from '@/store/store';
 import { StyledCommonMenuTitle, StyledCommonWrapper } from '@/styles/commons';
 import styled from '@emotion/styled';
-import Head from 'next/head';
-import { useDispatch, useSelector } from 'react-redux';
 
 export default function Home() {
-    const reduxTest = useSelector((state: RootState) => state.example.value);
-    const dispatch = useDispatch();
-
     return (
         <StyledMain>
             <StyledCommonWrapper>

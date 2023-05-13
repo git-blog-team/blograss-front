@@ -1,7 +1,7 @@
 import { navigationMenu } from '@/constants/optioins';
 import { MAIN_PAGE_URL } from '@/constants/utl';
 import { centerRowStyles, normalRowStyles } from '@/styles/flexModules';
-import { INaviMenuItem } from '@/types/interfaces/commons';
+import { type INaviMenuItem } from '@/types/interfaces/commons';
 import styled from '@emotion/styled';
 import _ from 'lodash';
 import Link from 'next/link';
@@ -9,10 +9,6 @@ import { useRouter } from 'next/router';
 
 export default function TopNavigation() {
     const router = useRouter();
-
-    const onClickNavMenu = (path: string) => () => {
-        router.push(path);
-    };
 
     const url = router.asPath;
 
@@ -64,7 +60,7 @@ const StyledNavItem = styled.li<{ isSelected?: boolean }>`
         text-decoration-line: none;
         text-decoration: none;
         color: ${(props) =>
-            props.isSelected
+            props.isSelected ?? false
                 ? props.theme.colors.point_orange
                 : props.theme.colors.point_yellow_green2};
     }

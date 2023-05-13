@@ -1,5 +1,5 @@
 import theme from '@/styles/theme';
-import { IDropDownProps } from '@/types/interfaces/commons';
+import { type IDropDownProps } from '@/types/interfaces/commons';
 import styled from '@emotion/styled';
 import Select from 'react-select';
 
@@ -36,8 +36,10 @@ export default function DropDown(props: IDropDownProps) {
                         primary25: theme.colors.light_orange_gray,
                     },
                 })}
-                onChange={(value) => onChange(name, value)}
-                defaultValue={options?.length ? [0] : ''}
+                onChange={(value) => {
+                    onChange(name, value);
+                }}
+                defaultValue={options?.length != null ? [0] : ''}
                 value={value}
             />
         </StyledDropdown>

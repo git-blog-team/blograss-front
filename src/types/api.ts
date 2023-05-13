@@ -1,4 +1,4 @@
-import { AxiosError, AxiosRequestConfig } from 'axios';
+import { type AxiosError, type AxiosRequestConfig } from 'axios';
 
 export interface IUseReactQueryParams {
     url: string;
