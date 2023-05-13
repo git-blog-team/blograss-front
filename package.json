@@ -59,9 +59,5 @@
       "pre-commit": "lint-staged"
     }
   },
-  "lint-staged": {
-    "**/*.ts,tsx": [
-      "npx eslint '**/*.ts,tsx'"
-    ]
-  }
+  "lint-staged": "next lint"
 }
