@@ -15,13 +15,9 @@ export default function Components() {
         <div>
             <h1> 컴포넌트 테스트 페이지</h1>
             <label htmlFor="textInput"></label>
-            <Input
-                placeholder="이메일"
-                id="emailText"
-                onChange={onChangeInput}
-                value={email}
-            />
-            <button onClick={onClick}>초기화</button>
+            <Input placeholder="이메일">
+                <div>fdsa</div>
+            </Input>
         </div>
     );
 }

@@ -34,6 +34,9 @@ export interface IInputProps {
     margin?: string;
     fontSize?: string;
     color?: string;
+    borderRadius?: string;
+    status?: 'error' | undefined | '';
+    children?: React.ReactNode;
 }
 
 export interface IStyledInputProps {
@@ -44,4 +47,7 @@ export interface IStyledInputProps {
     margin?: string;
     fontSize?: string;
     color?: string;
+    borderRadius?: string;
+    status?: 'error' | undefined | '';
+    inputId?: string;
 }

@@ -1,5 +1,6 @@
 import { IInputProps, IStyledInputProps } from '@/types/interfaces/commons';
 import styled from '@emotion/styled';
+import { useId } from 'react';
 
 const StyledInput = styled.input<IStyledInputProps>`
     width: ${(props) => props.width};
@@ -9,38 +10,20 @@ const StyledInput = styled.input<IStyledInputProps>`
     margin: ${(props) => props.margin};
     font-size: ${(props) => props.fontSize};
     color: ${(props) => props.color};
+    border-radius: ${(props) => props.borderRadius};
+    border: ${(props) => props.status === 'error' && '1px solid red'};
+    :focus {
+        outline: none;
+        border-color: ${(props) => props.status === 'error' && '1px solid red'};
+    }
 `;
 
-export default function Input({
-    type,
-    placeholder,
-    id,
-    onChange,
-    value,
-    width,
-    height,
-    padding,
-    border,
-    margin,
-    fontSize,
-    color,
-}: IInputProps) {
+export default function Input({ children, ...props }: IInputProps) {
+    const inputId = useId();
     return (
         <>
-            <StyledInput
-                type={type}
-                placeholder={placeholder}
-                id={id}
-                onChange={onChange}
-                value={value}
-                width={width}
-                height={height}
-                padding={padding}
-                border={border}
-                margin={margin}
-                fontSize={fontSize}
-                color={color}
-            />
+            <label htmlFor={inputId}>{children}</label>
+            <StyledInput id={inputId} {...props} />
         </>
     );
 }

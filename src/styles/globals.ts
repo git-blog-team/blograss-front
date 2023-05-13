@@ -16,10 +16,17 @@ export const globalStyles = (props: CustomThemeType) => css`
     input {
         border: 1px solid ${theme.colors.line_default};
         width: 100%;
-        height: 40px;
-        padding: 0px 0px 0px 0px;
+        min-height: 40px;
+        padding: 10px 12px 12px 9px;
         margin: 0px 0px 0px 0px;
         font-size: 14px;
+        line-height: 21px;
+        color: ${theme.colors.black};
+    }
+
+    label {
+        font-size: 24px;
+        line-height: 36px;
         color: ${theme.colors.black};
     }
 `;
