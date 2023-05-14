@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import Header from './Header';
 import TopNavigation from './TopNavigation';
 import styled from '@emotion/styled';

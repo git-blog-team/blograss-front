@@ -1,6 +1,6 @@
-import { ValueTypeObject } from '@/types/interfaces/commons';
+import { type ValueTypeObject } from '@/types/interfaces/commons';
 import { useState } from 'react';
-import { ValueType } from 'react-select';
+import { type ValueType } from 'react-select';
 
 export const useDropdowns = (initialvalue: ValueTypeObject) => {
     const [state, setState] = useState(initialvalue);

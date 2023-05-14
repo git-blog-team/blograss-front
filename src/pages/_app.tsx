@@ -3,7 +3,7 @@ import globalStyles from '@/styles/globals';
 import { Global, ThemeProvider } from '@emotion/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { AppProps } from 'next/app';
+import { type AppProps } from 'next/app';
 import { Provider } from 'react-redux'; // reduximport { store } from '@/store/store';
 import { store } from '@/store/store';
 import theme from '@/styles/theme';
