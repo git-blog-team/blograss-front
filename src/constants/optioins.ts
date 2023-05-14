@@ -1,4 +1,4 @@
-import { INaviMenuItem } from '@/types/interfaces/commons';
+import { type INaviMenuItem } from '@/types/interfaces/commons';
 import { BANNER_PAGE_URL, NOTICE_PAGE_URL, REPORT_PAGE_URL } from './utl';
 
 export const noticeListDropdownOptions = [

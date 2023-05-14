@@ -1,9 +1,7 @@
-import { MenuPlacement, ValueType } from 'react-select';
+import { type MenuPlacement, type ValueType } from 'react-select';
 
 // dropdown
-export interface ValueTypeObject {
-    [key: string]: ValueType<any, any>;
-}
+export type ValueTypeObject = Record<string, ValueType<any, any>>;
 // dropdown
 export interface IDropDownProps {
     isDisabled: boolean;

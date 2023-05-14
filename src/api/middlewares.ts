@@ -19,16 +19,16 @@ axios.interceptors.request.use(
         conf.headers['Content-Type'] = 'application/json; charset=utf-8';
         // 서버에게 json 형식을 사용할거라고 알려줌
 
-        if (!!token) {
-            conf.headers['Authorization'] = `Bearer ${token}`;
+        if (token !== undefined) {
+            conf.headers.Authorization = `Bearer ${token}`;
             // 토큰값이 있으면 헤더 Authorization에 넣어줌
         }
         return conf;
     },
 
-    (error) => {
+    async (error) => {
         // 요청실패시
-        Promise.reject(error);
+        await Promise.reject(error);
     },
 );
 
@@ -38,10 +38,10 @@ axios.interceptors.response.use(
     (res) => {
         return res.data;
     },
-    (error) => {
+    async (error) => {
         // 토큰만료관련 작성될 로직 여기
 
-        Promise.reject(error);
+        await Promise.reject(error);
     },
 );
 

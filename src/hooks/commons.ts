@@ -1,6 +1,9 @@
-import { IUseGenerateId, ValueTypeObject } from '@/types/interfaces/commons';
+import {
+    type IUseGenerateId,
+    type ValueTypeObject,
+} from '@/types/interfaces/commons';
 import { useId, useState } from 'react';
-import { ValueType } from 'react-select';
+import { type ValueType } from 'react-select';
 
 export const useDropdowns = (initialvalue: ValueTypeObject) => {
     const [state, setState] = useState(initialvalue);
@@ -16,7 +19,7 @@ export const useGenerateId = ({
     prefix = '',
     postfix = '',
 }: IUseGenerateId) => {
-    const prefixString = prefix ? `${prefix}-` : '';
-    const postfixString = postfix ? `-${postfix}` : '';
+    const prefixString = prefix.length > 0 ? `${prefix}-` : '';
+    const postfixString = postfix.length > 0 ? `-${postfix}` : '';
     return `${prefixString}${useId()}${postfixString}`;
 };
