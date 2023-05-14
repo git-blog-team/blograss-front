@@ -21,31 +21,9 @@ export interface INaviMenuItem {
     path: string;
 }
 
-export interface IInputProps {
-    type?: 'text' | 'password' | 'number' | 'email';
-    placeholder?: string;
-    id?: string;
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    value?: string;
-    width?: string;
-    height?: string;
-    padding?: string;
-    border?: string;
-    margin?: string;
-    fontSize?: string;
-    color?: string;
-    borderRadius?: string;
-    status?: 'error' | undefined | '';
-    children?: React.ReactNode;
-    isSearch?: boolean;
-    onClickReset?: () => void;
-    onClickSearch?: () => void;
-}
-
 export interface IStyledInputProps {
     width?: string;
     height?: string;
-    padding?: string;
     border?: string;
     margin?: string;
     fontSize?: string;
@@ -53,4 +31,21 @@ export interface IStyledInputProps {
     borderRadius?: string;
     status?: 'error' | undefined | '';
     inputId?: string;
+}
+
+export interface IInputProps extends IStyledInputProps {
+    children?: React.ReactNode;
+    id?: string;
+    type?: 'text' | 'password' | 'number' | 'email';
+    placeholder?: string;
+    value?: string;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onClickReset?: () => void;
+    onClickSearch?: () => void;
+    isSearch?: boolean;
+}
+
+export interface IUseGenerateId {
+    prefix?: string | undefined | '';
+    postfix?: string | undefined | '';
 }

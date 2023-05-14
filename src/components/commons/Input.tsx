@@ -1,9 +1,9 @@
 import { centerRowStyles } from '@/styles/flexModules';
 import { IInputProps, IStyledInputProps } from '@/types/interfaces/commons';
 import styled from '@emotion/styled';
-import { useId } from 'react';
 import { BsSearch, BsFillXCircleFill } from 'react-icons/bs';
 import theme from '@/styles/theme';
+import { useGenerateId } from '@/hooks/commons';
 
 const StyledWrapperInput = styled.div<IStyledInputProps>`
     ${centerRowStyles}
@@ -43,16 +43,17 @@ export default function Input({
     value,
     onClickReset,
     onClickSearch,
+    isSearch,
     ...props
 }: IInputProps) {
-    const inputId = id || useId();
+    const inputId = id || useGenerateId({ prefix: '', postfix: '' });
     const inputType = type || 'text';
 
     return (
         <>
             <label htmlFor={inputId}>{children}</label>
             <StyledWrapperInput {...props}>
-                {props.isSearch && (
+                {isSearch && (
                     <BsSearch
                         fontSize={props.fontSize}
                         onClick={onClickSearch}
@@ -65,7 +66,7 @@ export default function Input({
                     onChange={onChange}
                     value={value}
                 />
-                {props.isSearch && value && (
+                {isSearch && value && (
                     <BsFillXCircleFill
                         fontSize={props.fontSize}
                         onClick={onClickReset}
