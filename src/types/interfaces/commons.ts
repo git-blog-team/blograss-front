@@ -27,7 +27,7 @@ export interface IStyledInputProps {
     fontSize?: string;
     color?: string;
     borderRadius?: string;
-    status?: 'error' | undefined | '';
+    status?: 'error' | undefined | '' | string;
     inputId?: string;
 }
 
