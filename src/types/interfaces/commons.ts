@@ -34,7 +34,7 @@ export interface IStyledInputProps {
 export interface IInputProps extends IStyledInputProps {
     children?: React.ReactNode;
     id?: string;
-    type?: 'text' | 'password' | 'number' | 'email';
+    type?: 'text' | 'password' | 'number' | 'email' | undefined;
     placeholder?: string;
     value?: string;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;

@@ -26,7 +26,7 @@ export default function Components() {
                 value={email}
                 onClickReset={onClickReset}
                 onClickSearch={onClickSearch}
-                status={email ? 'error' : ''}
+                status={email.length > 0 ? 'error' : ''}
             >
                 라벨텍스트입니다
             </Input>
