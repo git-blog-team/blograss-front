@@ -18,3 +18,15 @@ export interface INaviMenuItem {
     name: string;
     path: string;
 }
+
+export interface IPaginationProps {
+    totalItems: number;
+    itemsPerPage: number;
+    pagesPerBlock: number;
+    currentPage: number;
+    pageUrl: string;
+}
+
+export interface IStyledLinkItemProps {
+    iscurrentpage?: 'true' | 'false';
+}
