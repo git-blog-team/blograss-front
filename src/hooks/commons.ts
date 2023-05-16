@@ -19,7 +19,7 @@ export const useGenerateId = ({
     prefix = '',
     postfix = '',
 }: IUseGenerateId) => {
-    const prefixString = prefix.length > 0 ? `${prefix}-` : '';
-    const postfixString = postfix.length > 0 ? `-${postfix}` : '';
+    const prefixString = prefix !== '' ? `${prefix}-` : '';
+    const postfixString = postfix !== '' ? `-${postfix}` : '';
     return `${prefixString}${useId()}${postfixString}`;
 };

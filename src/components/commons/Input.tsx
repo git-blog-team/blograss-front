@@ -8,7 +8,7 @@ import { BsSearch, BsFillXCircleFill } from 'react-icons/bs';
 import theme from '@/styles/theme';
 import { useGenerateId } from '@/hooks/commons';
 
-const StyledWrapperInput = styled.div<IStyledInputProps>`
+export const StyledWrapperInput = styled.div<IStyledInputProps>`
     ${centerRowStyles}
     background-color: #fff;
     width: ${(props) => props.width ?? '100%'};
@@ -20,7 +20,7 @@ const StyledWrapperInput = styled.div<IStyledInputProps>`
         props.status === 'error' &&
         `border-color: ${theme.colors.point_orange};`}
 
-    input {
+    >input {
         width: 100%;
         border: unset;
         padding: 0px 10px 0px 10px;
@@ -56,7 +56,7 @@ export default function Input({
         <>
             <label htmlFor={inputId}>{children}</label>
             <StyledWrapperInput {...props}>
-                {(isSearch ?? false) && (
+                {Boolean(isSearch ?? false) && (
                     <BsSearch
                         fontSize={props.fontSize}
                         onClick={onClickSearch}
@@ -69,7 +69,7 @@ export default function Input({
                     onChange={onChange}
                     value={value}
                 />
-                {(isSearch ?? false) && value != null && (
+                {Boolean(isSearch ?? false) && value != null && (
                     <BsFillXCircleFill
                         fontSize={props.fontSize}
                         onClick={onClickReset}

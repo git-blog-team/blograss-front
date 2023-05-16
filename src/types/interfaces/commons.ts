@@ -44,6 +44,6 @@ export interface IInputProps extends IStyledInputProps {
 }
 
 export interface IUseGenerateId {
-    prefix?: string | undefined | '';
-    postfix?: string | undefined | '';
+    prefix?: string;
+    postfix?: string;
 }
