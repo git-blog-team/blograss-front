@@ -28,12 +28,10 @@ export const useEditor = (initialValue: string) => {
     const onChangeEditorContent = (type: string, contentRef: any) => {
         if (type === 'html') {
             setEditorContent(contentRef.current?.getInstance().getHTML());
-            console.log(editorContent);
         }
 
         if (type === 'markdown') {
             setEditorContent(contentRef.current?.getInstance().getMarkdown());
-            console.log(editorContent);
         }
     };
 

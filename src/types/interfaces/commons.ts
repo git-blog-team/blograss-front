@@ -18,3 +18,26 @@ export interface INaviMenuItem {
     name: string;
     path: string;
 }
+
+// checkbox
+export interface CheckboxOptions {
+    label: string;
+    isChecked: boolean;
+    onChange: (label: string, isChecked: boolean) => void;
+    accentColor?: string;
+    labelPosition?: 'left' | 'right';
+    fontSize?: string;
+    fontColor?: string;
+    boxSize?: 'small' | 'big' | 'normal';
+    radius?: string;
+    borderSize?: string;
+    borderColor?: string;
+}
+
+// editor-write
+export interface EditorOptions {
+    height?: string;
+    type: 'html' | 'markdown';
+    initialValue?: string;
+    onChange: (type: string, ref: any) => void;
+}

@@ -1,18 +1,5 @@
+import { type CheckboxOptions } from '@/types/interfaces/commons';
 import styled from '@emotion/styled';
-
-interface CheckboxOptions {
-    label: string;
-    isChecked: boolean;
-    onChange: (label: string, isChecked: boolean) => void;
-    accentColor?: string;
-    labelPosition?: 'left' | 'right';
-    fontSize?: string;
-    fontColor?: string;
-    boxSize?: 'small' | 'big' | 'normal';
-    radius?: string;
-    borderSize?: string;
-    borderColor?: string;
-}
 
 export default function CheckBox(options: CheckboxOptions) {
     const {
@@ -28,6 +15,7 @@ export default function CheckBox(options: CheckboxOptions) {
         borderColor = 'lightgrey', // 체크박스 보더의 색상
         radius = '5px', // 체크박스 보더의 둥글기
     } = options;
+
     return (
         <Label fontSize={fontSize} fontColor={fontColor}>
             {labelPosition === 'left' && <span>{label}</span>}

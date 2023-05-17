@@ -1,13 +1,7 @@
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { useEffect, useRef } from 'react';
-
-interface EditorOptions {
-    height?: string;
-    type: 'html' | 'markdown';
-    initialValue?: string;
-    onChange: (type: string, ref: any) => void;
-}
+import { type EditorOptions } from '@/types/interfaces/commons';
 
 export default function EditorWrite(options: EditorOptions) {
     const { height = '400px', type, initialValue = ' ', onChange } = options;
