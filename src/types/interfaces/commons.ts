@@ -18,3 +18,32 @@ export interface INaviMenuItem {
     name: string;
     path: string;
 }
+
+export interface IStyledInputProps {
+    width?: string;
+    height?: string;
+    border?: string;
+    margin?: string;
+    fontSize?: string;
+    color?: string;
+    borderRadius?: string;
+    status?: 'error' | undefined | '' | string;
+    inputId?: string;
+}
+
+export interface IInputProps extends IStyledInputProps {
+    children?: React.ReactNode;
+    id?: string;
+    type?: 'text' | 'password' | 'number' | 'email' | undefined;
+    placeholder?: string;
+    value?: string;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onClickReset?: () => void;
+    onClickSearch?: () => void;
+    isSearch?: boolean;
+}
+
+export interface IUseGenerateId {
+    prefix?: string;
+    postfix?: string;
+}

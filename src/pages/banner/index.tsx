@@ -1,3 +1,3 @@
 export default function Banner() {
-    return <>공지사항관리</>;
+    return <h1>공지사항관리</h1>;
 }
