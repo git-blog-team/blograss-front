@@ -4,7 +4,7 @@ import { type MenuPlacement, type ValueType } from 'react-select';
 export type ValueTypeObject = Record<string, ValueType<any, any>>;
 // dropdown
 export interface IDropDownProps {
-    isDisabled: boolean;
+    isDisabled?: boolean;
     name: string;
     options: readonly any[] | undefined;
     value: ValueTypeObject;
@@ -17,4 +17,11 @@ export interface INaviMenuItem {
     id: number;
     name: string;
     path: string;
+}
+
+// table
+export interface ICommonTableProps {
+    headers: { contents: string; width?: string }[];
+    children: JSX.Element;
+    isEmptyList?: boolean;
 }
