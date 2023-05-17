@@ -19,6 +19,17 @@ export interface INaviMenuItem {
     path: string;
 }
 
+export interface IPaginationProps {
+    totalItems: number;
+    itemsPerPage: number;
+    pagesPerBlock: number;
+    currentPage: number;
+    pageUrl: string;
+}
+
+export interface IStyledLinkItemProps {
+    iscurrentpage?: 'true' | 'false';
+}
 
 export interface IPropsButton {
     children?: React.ReactNode;
