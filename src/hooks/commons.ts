@@ -1,5 +1,6 @@
 import { type ValueTypeObject } from '@/types/interfaces/commons';
-import { useState } from 'react';
+import { type RefObject, useState } from 'react';
+import { type Editor } from '@toast-ui/react-editor';
 import { type ValueType } from 'react-select';
 
 export const useDropdowns = (initialvalue: ValueTypeObject) => {
@@ -25,13 +26,18 @@ export const useCheckBox = (initialValue: ValueTypeObject) => {
 export const useEditor = (initialValue: string) => {
     const [editorContent, setEditorContent] = useState(initialValue);
 
-    const onChangeEditorContent = (type: string, contentRef: any) => {
+    const onChangeEditorContent = (
+        type: string,
+        contentRef: RefObject<Editor>,
+    ) => {
         if (type === 'html') {
-            setEditorContent(contentRef.current?.getInstance().getHTML());
+            setEditorContent(contentRef.current?.getInstance().getHTML() ?? '');
         }
 
         if (type === 'markdown') {
-            setEditorContent(contentRef.current?.getInstance().getMarkdown());
+            setEditorContent(
+                contentRef.current?.getInstance().getMarkdown() ?? '',
+            );
         }
     };
 
