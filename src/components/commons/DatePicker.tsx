@@ -1,4 +1,5 @@
-mport { dateToYYMMDD, getDaysInMonth } from '@/utils/dateUtils';
+import { daysText } from '@/constants/optioins';
+import { dateToYYMMDD, getDaysInMonth } from '@/utils/dateUtils';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import { useState } from 'react';
@@ -9,34 +10,19 @@ interface IDatePickerProps {
     onChange?: (date: Date) => void;
 }
 
-const WrapperDatePicker = styled.div`
-    width: 200px;
-    height: 200px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-    background-color: #fff;
-    border: 1px solid #e5e5e5;
-    padding: 4% 8% 4% 8%;
-    z-index: 10;
-`;
+const CalenderHaeder = () => {
+    return (
+        <>
+            {daysText.map((item) => (
+                <StyledCalenderHeader key={item}>{item}</StyledCalenderHeader>
+            ))}
+        </>
+    );
+};
 
-const DateItem = styled.button`
-    width: 12%;
-    height: 12%;
-    text-align: center;
-    background-color: #fff;
-    border: unset;
-    :hover {
-        background-color: #e5e5e5;
-    }
-    cursor: pointer;
-`;
 export default function DatePicker({ today, onChange }: IDatePickerProps) {
     const [isOpenCalender, setIsOpenCalender] = useState(false);
-    const [isSelectDay, setIsSelectDay] = useState(today);
+    const [isSelectDay, setIsSelectDay] = useState(dateToYYMMDD(today));
 
     const onClickCalenderIcon = () => {
         setIsOpenCalender(!isOpenCalender);
@@ -55,25 +41,93 @@ export default function DatePicker({ today, onChange }: IDatePickerProps) {
     const startDayArr = new Array(startDay).fill('');
 
     /**
-     * 매월 마지막 날짜 구하기
+     * 달력 날짜 출력용 배열 만들기
      */
-    const daysInMonthArr = new Array(getDaysInMonth(today)).fill(1);
+    const daysInMonthArr = new Array(getDaysInMonth(today))
+        .fill({
+            dateText: 0,
+            date: `${startDay}-01`,
+        })
+        .map((item, index) => {
+            return {
+                dateText: index + 1,
+                date: `${dateToYYMM(today)}-${index + 1}`,
+            };
+        });
+
+    const onClickCalenderDay = (item: string) => {
+        setIsSelectDay(item);
+        setIsOpenCalender(false);
+    };
 
     return (
-        <div>
+        <StyledWrapperDatePicker>
             <div>
-                <h1>DatePicker</h1>
-                <input type="text" value={dateToYYMMDD(today)} />
-                <BsFillCalendarPlusFill onClick={onClickCalenderIcon} />
+                <input type="text" value={isSelectDay} readOnly />
+                <BsFillCalendarPlusFill
+                    onClick={onClickCalenderIcon}
+                    fontSize={20}
+                />
             </div>
-            <WrapperDatePicker>
-                {startDayArr.map((item) => (
-                    <DateItem key={item}>{item}</DateItem>
-                ))}
-                {daysInMonthArr.map((item, index) => (
-                    <DateItem key={index}>{item + index}</DateItem>
-                ))}
-            </WrapperDatePicker>
-        </div>
+            {isOpenCalender && (
+                <StyledCalender>
+                    <CalenderHaeder />
+                    {startDayArr.map((item) => (
+                        <StyledCalenderItem key={item}>
+                            {item}
+                        </StyledCalenderItem>
+                    ))}
+                    {daysInMonthArr.map((item, index) => (
+                        <StyledCalenderItem
+                            key={index}
+                            onClick={() => {
+                                onClickCalenderDay(item.date);
+                            }}
+                        >
+                            {Number(item.dateText)}
+                        </StyledCalenderItem>
+                    ))}
+                </StyledCalender>
+            )}
+        </StyledWrapperDatePicker>
     );
 }
+
+const StyledWrapperDatePicker = styled.div`
+    position: relative;
+`;
+
+const StyledCalender = styled.div`
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    padding: 8px 15px;
+    z-index: 10;
+    position: absolute;
+`;
+
+const StyledCalenderItem = styled.button`
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    background-color: #fff;
+    border: unset;
+    :hover {
+        background-color: #e5e5e5;
+    }
+    cursor: pointer;
+`;
+
+const StyledCalenderHeader = styled.div`
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    background-color: #fff;
+    border: unset;
+`;
