@@ -1,4 +1,5 @@
 import { useGenerateId } from '@/hooks/commons';
+import { normalRowStyles } from '@/styles/flexModules';
 import theme from '@/styles/theme';
 import {
     type IStyledCalenderItemProps,
@@ -37,11 +38,11 @@ export default function Calender({
         });
 
     return (
-        <>
+        <StyledWrapperMonth>
             {startDayArr.map((item, index) => (
-                <StyledCalenderItem key={`${firstKey}-${index}`}>
+                <StyledEmptyItem key={`${firstKey}-${index}`}>
                     {item}
-                </StyledCalenderItem>
+                </StyledEmptyItem>
             ))}
             {daysInMonthArr.map((item, index) => (
                 <StyledCalenderItem
@@ -54,9 +55,22 @@ export default function Calender({
                     {Number(item.dateText)}
                 </StyledCalenderItem>
             ))}
-        </>
+        </StyledWrapperMonth>
     );
 }
+
+const StyledWrapperMonth = styled.div`
+    ${normalRowStyles()}
+    width: 100%;
+    flex-wrap: wrap;
+`;
+
+const StyledEmptyItem = styled.button<IStyledCalenderItemProps>`
+    width: 24px;
+    height: 24px;
+    background-color: #fff;
+    border: unset;
+`;
 
 const StyledCalenderItem = styled.button<IStyledCalenderItemProps>`
     width: 24px;

@@ -7,6 +7,7 @@ import CalenderHeader from './calenderHeader';
 import CalenderNav from './calenderNav';
 import { type IDatePickerProps } from '@/types/interfaces/commons';
 import { normalRowStyles } from '@/styles/flexModules';
+import theme from '@/styles/theme';
 
 export default function DatePicker({
     today,
@@ -36,13 +37,10 @@ export default function DatePicker({
         <StyledWrapper>
             <StyledWrapperDatePicker>
                 <input type="text" value={isSelectDay} readOnly />
-                <BsFillCalendarPlusFill
-                    onClick={onClickCalenderIcon}
-                    fontSize={20}
-                />
+                <StyledCalenderIcon onClick={onClickCalenderIcon} />
             </StyledWrapperDatePicker>
             {isOpenCalender && (
-                <StyledCalender>
+                <StyledWrapperCalender>
                     <CalenderNav
                         isMonthFirstDay={isMonthFirstDay}
                         setIsMonthFirstDay={setIsMonthFirstDay}
@@ -53,7 +51,7 @@ export default function DatePicker({
                         isSelectDay={isSelectDay}
                         onClickCalenderDay={onClickCalenderDay}
                     />
-                </StyledCalender>
+                </StyledWrapperCalender>
             )}
         </StyledWrapper>
     );
@@ -63,21 +61,27 @@ const StyledWrapper = styled.div`
     position: relative;
 `;
 
+const StyledCalenderIcon = styled(BsFillCalendarPlusFill)`
+    margin: 0px 0px 0px 5px;
+    font-size: 20px;
+    color: ${theme.colors.point_yellow_green2};
+    cursor: pointer;
+`;
+
 const StyledWrapperDatePicker = styled.div`
     ${normalRowStyles()}
 `;
 
-const StyledCalender = styled.div`
-    width: 200px;
-    height: 200px;
+const StyledWrapperCalender = styled.div`
+    position: absolute;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    flex-wrap: wrap;
+    width: 200px;
+    height: auto;
     background-color: #fff;
     border: 1px solid #e5e5e5;
     padding: 8px 15px;
     z-index: 10;
-    position: absolute;
 `;
