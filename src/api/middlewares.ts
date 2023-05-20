@@ -4,7 +4,7 @@ import Axios from 'axios';
 import Cookies from 'js-cookie';
 
 const axios = Axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'https://api.blograss.com',
     timeout: 1000,
 });
 
