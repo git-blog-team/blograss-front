@@ -4,9 +4,9 @@ import { type MenuPlacement, type ValueType } from 'react-select';
 export type ValueTypeObject = Record<string, ValueType<any, any>>;
 // dropdown
 export interface IDropDownProps {
-    isDisabled: boolean;
+    isDisabled?: boolean;
     name: string;
-    options: readonly any[] | undefined;
+    options: readonly  any[] | undefined;
     value: ValueTypeObject;
     onChange: (value: ValueType<any, any>, name: string) => void;
     direction?: MenuPlacement;
@@ -18,6 +18,35 @@ export interface INaviMenuItem {
     name: string;
     path: string;
 }
+
+
+export interface ICommonTableProps {
+    headers:Array<{ contents: string; width?: string }>;
+    children: JSX.Element;
+    isEmptyList?: boolean;
+}
+
+// checkbox
+export interface CheckboxOptions {
+    label: string;
+    isChecked: boolean;
+    onChange: (label: string, isChecked: boolean) => void;
+    accentColor?: string;
+    labelPosition?: 'left' | 'right';
+    fontSize?: string;
+    fontColor?: string;
+    boxSize?: 'small' | 'big' | 'normal';
+    radius?: string;
+    borderSize?: string;
+    borderColor?: string;
+}
+
+// editor-write
+export interface EditorOptions {
+    height?: string;
+    type: 'html' | 'markdown';
+    initialValue?: string;
+    onChange: (type: string, ref: any) => void;}
 
 export interface IPaginationProps {
     totalItems: number;
@@ -107,3 +136,4 @@ export interface ICalenderNavProps {
     isMonthFirstDay: string;
     setIsMonthFirstDay: (changeMonth: string) => void;
 }
+

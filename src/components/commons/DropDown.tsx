@@ -17,7 +17,7 @@ export default function DropDown(props: IDropDownProps) {
     } = props;
 
     return (
-        <StyledDropdown>
+        <StyledDropdown className="custom_dropdown">
             <Select
                 classNamePrefix={'react-select'}
                 isDisabled={isDisabled}
@@ -46,7 +46,7 @@ export default function DropDown(props: IDropDownProps) {
     );
 }
 
-const StyledDropdown = styled.div`
+export const StyledDropdown = styled.div`
     width: 200px;
 
     div.react-select__control {
