@@ -38,3 +38,5 @@ export const navigationMenu: INaviMenuItem[] = [
         path: REPORT_PAGE_URL,
     },
 ];
+
+export const daysText = ['일', '월', '화', '수', '목', '금', '토'];
