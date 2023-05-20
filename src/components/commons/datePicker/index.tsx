@@ -1,9 +1,9 @@
 import { daysText } from '@/constants/optioins';
-import { YYMMDDToYYMM, dateToYYMMDD, getDaysInMonth } from '@/utils/dateUtils';
+import { dateToYYMMDD } from '@/utils/dateUtils';
 import styled from '@emotion/styled';
-import dayjs from 'dayjs';
 import { useState } from 'react';
 import { BsFillCalendarPlusFill } from 'react-icons/bs';
+import Calender from './calender';
 
 interface IDatePickerProps {
     today: Date;
@@ -25,23 +25,6 @@ export default function DatePicker({
         setIsOpenCalender(!isOpenCalender);
     };
 
-    const startDay = dayjs(`${YYMMDDToYYMM(isSelectDay)}-01`).get('day');
-
-    /**
-     * 달력 날짜 출력용 배열 만들기
-     */
-    const daysInMonthArr = new Array(getDaysInMonth(isSelectDay))
-        .fill({
-            dateText: 0,
-            date: `${startDay}-01`,
-        })
-        .map((_, index) => {
-            return {
-                dateText: index + 1,
-                date: `${YYMMDDToYYMM(isSelectDay)}-${index + 1}`,
-            };
-        });
-
     const onClickCalenderDay = (item: string) => {
         setIsSelectDay(item);
         if (handlingPickDate != null) {
@@ -51,30 +34,35 @@ export default function DatePicker({
     };
 
     return (
-        <StyledWrapperDatePicker>
-            <div>
+        <StyledWrapper>
+            <StyledWrapperDatePicker>
                 <input type="text" value={isSelectDay} readOnly />
                 <BsFillCalendarPlusFill
                     onClick={onClickCalenderIcon}
                     fontSize={20}
                 />
-            </div>
+            </StyledWrapperDatePicker>
             {isOpenCalender && (
                 <StyledCalender>
                     <CalenderHaeder />
                     <Calender
-                        startDay={startDay}
-                        daysInMonthArr={daysInMonthArr}
+                        isSelectDay={isSelectDay}
                         onClickCalenderDay={onClickCalenderDay}
                     />
                 </StyledCalender>
             )}
-        </StyledWrapperDatePicker>
+        </StyledWrapper>
     );
 }
 
-const StyledWrapperDatePicker = styled.div`
+const StyledWrapper = styled.div`
     position: relative;
+`;
+
+const StyledWrapperDatePicker = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 `;
 
 const StyledCalender = styled.div`
@@ -112,51 +100,4 @@ const StyledCalenderHeader = styled.div`
     text-align: center;
     background-color: #fff;
     border: unset;
-`;
-
-/**
- *
- * @param param0
- * @returns 달력 날짜 렌더링
- */
-const Calender = ({
-    startDay,
-    daysInMonthArr,
-    onClickCalenderDay,
-}: {
-    startDay: number;
-    daysInMonthArr: Array<{ dateText: number; date: string }>;
-    onClickCalenderDay: (item: string) => void;
-}) => {
-    const startDayArr = new Array(startDay).fill('');
-
-    return (
-        <>
-            {startDayArr.map((item) => (
-                <StyledCalenderItem key={item}>{item}</StyledCalenderItem>
-            ))}
-            {daysInMonthArr.map((item, index) => (
-                <StyledCalenderItem
-                    key={index}
-                    onClick={() => {
-                        onClickCalenderDay(item.date);
-                    }}
-                >
-                    {Number(item.dateText)}
-                </StyledCalenderItem>
-            ))}
-        </>
-    );
-};
-
-const StyledCalenderItem = styled.button`
-    width: 24px;
-    height: 24px;
-    text-align: center;
-    background-color: #fff;
-    border: unset;
-    :hover {
-        background-color: #e5e5e5;
-    }
-    cursor: pointer;
 `;

@@ -1,4 +1,4 @@
-import DatePicker from '@/components/commons/DatePicker';
+import DatePicker from '@/components/commons/datePicker';
 
 export default function Banner() {
     const today = new Date();

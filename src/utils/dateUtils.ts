@@ -14,3 +14,7 @@ export const getDaysInMonth = (YYMMDD: string) => {
 export const YYMMDDToYYMM = (YYMMDD: string) => {
     return dayjs(YYMMDD).format('YYYY-MM');
 };
+
+export const getStartDayOfMonth = (YYMMDD: string) => {
+    return dayjs(`${YYMMDDToYYMM(YYMMDD)}-01`).get('day');
+};
