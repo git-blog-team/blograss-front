@@ -1,5 +1,5 @@
 import { daysText } from '@/constants/optioins';
-import { dateToYYMMDD, getDaysInMonth } from '@/utils/dateUtils';
+import { YYMMDDToYYMM, dateToYYMMDD, getDaysInMonth } from '@/utils/dateUtils';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import { useState } from 'react';
@@ -15,28 +15,22 @@ export default function DatePicker({
     handlingPickDate,
 }: IDatePickerProps) {
     const [isOpenCalender, setIsOpenCalender] = useState(false);
+    /**
+     * 초기 선택 날짜는 date형식으로 넘어오기 때문에 YYMMDD 형식으로 변환
+     * 그 이후에는 YYMMDD 형식으로 관리
+     */
     const [isSelectDay, setIsSelectDay] = useState(dateToYYMMDD(today));
 
     const onClickCalenderIcon = () => {
         setIsOpenCalender(!isOpenCalender);
     };
 
-    const dateToYYMM = (date: Date) => {
-        return dayjs(date).format('YYYY-MM');
-    };
-
-    /**
-     * 매월 1일의 요일 구하기
-     * 0: 일요일
-     */
-
-    const startDay = dayjs(`${dateToYYMM(today)}-01`).get('day');
-    const startDayArr = new Array(startDay).fill('');
+    const startDay = dayjs(`${YYMMDDToYYMM(isSelectDay)}-01`).get('day');
 
     /**
      * 달력 날짜 출력용 배열 만들기
      */
-    const daysInMonthArr = new Array(getDaysInMonth(today))
+    const daysInMonthArr = new Array(getDaysInMonth(isSelectDay))
         .fill({
             dateText: 0,
             date: `${startDay}-01`,
@@ -44,7 +38,7 @@ export default function DatePicker({
         .map((_, index) => {
             return {
                 dateText: index + 1,
-                date: `${dateToYYMM(today)}-${index + 1}`,
+                date: `${YYMMDDToYYMM(isSelectDay)}-${index + 1}`,
             };
         });
 
@@ -69,7 +63,7 @@ export default function DatePicker({
                 <StyledCalender>
                     <CalenderHaeder />
                     <Calender
-                        startDayArr={startDayArr}
+                        startDay={startDay}
                         daysInMonthArr={daysInMonthArr}
                         onClickCalenderDay={onClickCalenderDay}
                     />
@@ -126,14 +120,16 @@ const StyledCalenderHeader = styled.div`
  * @returns 달력 날짜 렌더링
  */
 const Calender = ({
-    startDayArr,
+    startDay,
     daysInMonthArr,
     onClickCalenderDay,
 }: {
-    startDayArr: string[];
+    startDay: number;
     daysInMonthArr: Array<{ dateText: number; date: string }>;
     onClickCalenderDay: (item: string) => void;
 }) => {
+    const startDayArr = new Array(startDay).fill('');
+
     return (
         <>
             {startDayArr.map((item) => (
