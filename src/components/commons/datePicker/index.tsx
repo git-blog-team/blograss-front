@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { BsFillCalendarPlusFill } from 'react-icons/bs';
 import Calender from './calender';
 import CalenderHeader from './calenderHeader';
+import CalenderNav from './calenderNav';
 
 interface IDatePickerProps {
     today: Date;
@@ -20,6 +21,7 @@ export default function DatePicker({
      * 그 이후에는 YYMMDD 형식으로 관리
      */
     const [isSelectDay, setIsSelectDay] = useState(dateToYYMMDD(today));
+    const [currentMonth, setIsCurrentMonth] = useState(dateToYYMMDD(today));
 
     const onClickCalenderIcon = () => {
         setIsOpenCalender(!isOpenCalender);
@@ -44,6 +46,10 @@ export default function DatePicker({
             </StyledWrapperDatePicker>
             {isOpenCalender && (
                 <StyledCalender>
+                    <CalenderNav
+                        currentMonth={currentMonth}
+                        setIsCurrentMonth={setIsCurrentMonth}
+                    />
                     <CalenderHeader />
                     <Calender
                         isSelectDay={isSelectDay}
