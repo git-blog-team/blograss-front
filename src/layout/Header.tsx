@@ -1,11 +1,23 @@
 import { centerRowStyles, spaceBetweenRowStyles } from '@/styles/flexModules';
 import styled from '@emotion/styled';
+import Head from 'next/head';
+import Image from 'next/image';
 
 export default function Header() {
     return (
         <StyledHeader>
+            <Head>
+                <title>Blograss</title>
+            </Head>
             <div>
                 <p>
+                    <Image
+                        src="/logo.png"
+                        height={30}
+                        width={30}
+                        alt="로고이미지"
+                        style={{ margin: ' 0 10px 2px 0' }}
+                    />
                     Blograss<span>ADMIN</span>
                 </p>
                 <div>

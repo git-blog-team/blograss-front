@@ -11,6 +11,7 @@ const colors = {
     light_orange_gray: '#eeeeee',
     light_gray: '#f2f2f2',
     txt_gray: '#b2b2b2',
+    light_yellow_green: '#edfcf1',
 };
 
 const theme = {
