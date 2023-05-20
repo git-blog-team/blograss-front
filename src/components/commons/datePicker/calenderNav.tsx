@@ -1,10 +1,6 @@
+import { type ICalenderNavProps } from '@/types/interfaces/commons';
 import { YYMMDDToYYMM, dateToYYMM01 } from '@/utils/dateUtils';
 import styled from '@emotion/styled';
-
-interface ICalenderNavProps {
-    isMonthFirstDay: string;
-    setIsMonthFirstDay: (changeMonth: string) => void;
-}
 
 export default function CalenderNav({
     isMonthFirstDay,

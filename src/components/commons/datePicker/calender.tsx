@@ -1,17 +1,15 @@
 import { useGenerateId } from '@/hooks/commons';
 import theme from '@/styles/theme';
 import {
+    type IStyledCalenderItemProps,
+    type ICalenderProps,
+} from '@/types/interfaces/commons';
+import {
     dateToYYMMDD,
     getDaysInMonth,
     getStartDayOfMonth,
 } from '@/utils/dateUtils';
 import styled from '@emotion/styled';
-
-interface ICalenderProps {
-    isSelectDay: string;
-    isMonthFirstDay: string;
-    onClickCalenderDay: (item: string) => void;
-}
 
 export default function Calender({
     isSelectDay,
@@ -58,10 +56,6 @@ export default function Calender({
             ))}
         </>
     );
-}
-
-interface IStyledCalenderItemProps {
-    isSelected?: boolean;
 }
 
 const StyledCalenderItem = styled.button<IStyledCalenderItemProps>`

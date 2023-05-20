@@ -87,3 +87,23 @@ export interface IUseGenerateId {
     prefix?: string;
     postfix?: string;
 }
+
+export interface IDatePickerProps {
+    today: Date;
+    handlingPickDate?: (pickDate: string) => void;
+}
+
+export interface ICalenderProps {
+    isSelectDay: string;
+    isMonthFirstDay: string;
+    onClickCalenderDay: (item: string) => void;
+}
+
+export interface IStyledCalenderItemProps {
+    isSelected?: boolean;
+}
+
+export interface ICalenderNavProps {
+    isMonthFirstDay: string;
+    setIsMonthFirstDay: (changeMonth: string) => void;
+}

@@ -5,11 +5,8 @@ import { BsFillCalendarPlusFill } from 'react-icons/bs';
 import Calender from './calender';
 import CalenderHeader from './calenderHeader';
 import CalenderNav from './calenderNav';
-
-interface IDatePickerProps {
-    today: Date;
-    handlingPickDate?: (pickDate: string) => void;
-}
+import { type IDatePickerProps } from '@/types/interfaces/commons';
+import { normalRowStyles } from '@/styles/flexModules';
 
 export default function DatePicker({
     today,
@@ -67,9 +64,7 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledWrapperDatePicker = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    ${normalRowStyles()}
 `;
 
 const StyledCalender = styled.div`
