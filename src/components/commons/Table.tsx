@@ -1,9 +1,9 @@
 import { centerColumnStyles } from '@/styles/flexModules';
-import { ICommonTableProps } from '@/types/interfaces/commons';
+import { type ICommonTableProps } from '@/types/interfaces/commons';
 import styled from '@emotion/styled';
 import _ from 'lodash';
 import Image from 'next/image';
-import { ValueType } from 'react-select';
+import { type ValueType } from 'react-select';
 
 export default function CommonTable(props: ICommonTableProps) {
     const { headers, children, isEmptyList } = props;
@@ -31,19 +31,20 @@ export default function CommonTable(props: ICommonTableProps) {
                 </thead>
                 <tbody>{children}</tbody>
             </table>
-            {isEmptyList && (
-                <StyledNoData>
-                    <p>해당 데이터가 없습니다.</p>
-
-                    <Image
-                        src="/logo.png"
-                        height={120}
-                        width={120}
-                        alt="로고이미지"
-                        style={{ margin: ' 0 10px 2px 0' }}
-                    />
-                </StyledNoData>
-            )}
+            {isEmptyList !== null &&
+                isEmptyList !== undefined &&
+                isEmptyList && (
+                    <StyledNoData>
+                        <p>해당 데이터가 없습니다.</p>
+                        <Image
+                            src="/logo.png"
+                            height={120}
+                            width={120}
+                            alt="로고이미지"
+                            style={{ margin: ' 0 10px 2px 0' }}
+                        />
+                    </StyledNoData>
+                )}
         </StyledCommonTable>
     );
 }

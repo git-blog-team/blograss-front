@@ -6,7 +6,7 @@ export type ValueTypeObject = Record<string, ValueType<any, any>>;
 export interface IDropDownProps {
     isDisabled?: boolean;
     name: string;
-    options: readonly any[] | undefined;
+    options: readonly  any[] | undefined;
     value: ValueTypeObject;
     onChange: (value: ValueType<any, any>, name: string) => void;
     direction?: MenuPlacement;
@@ -21,7 +21,7 @@ export interface INaviMenuItem {
 
 // table
 export interface ICommonTableProps {
-    headers: { contents: string; width?: string }[];
+    headers:Array<{ contents: string; width?: string }>;
     children: JSX.Element;
     isEmptyList?: boolean;
 }

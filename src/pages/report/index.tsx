@@ -1,8 +1,8 @@
 import CommonTable from '@/components/commons/Table';
+import { sampleReportData } from '@/constants/sampleReportData';
 import { StyledCommonMenuTitle, StyledCommonWrapper } from '@/styles/commons';
 import styled from '@emotion/styled';
 import _ from 'lodash';
-import { fakeReportData } from './sampleData';
 
 export default function Report() {
     return (
@@ -26,7 +26,7 @@ export default function Report() {
                     ]}
                 >
                     <>
-                        {_.map(fakeReportData, (item) => (
+                        {_.map(sampleReportData, (item) => (
                             <tr key={item.id}>
                                 <td>{item.id}</td>
                                 <td>{item.reportDate}</td>

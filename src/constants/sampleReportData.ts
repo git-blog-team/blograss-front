@@ -1,4 +1,4 @@
-export const fakeReportData = [
+export const sampleReportData = [
     {
         id: 1,
         reportDate: '2020-09-11',
