@@ -1,3 +1,4 @@
+import theme from '@/styles/theme';
 import {
     YYMMDDToYYMM,
     getDaysInMonth,
@@ -39,6 +40,7 @@ export default function Calender({
                     onClick={() => {
                         onClickCalenderDay(item.date);
                     }}
+                    isSelected={item.date === isSelectDay}
                 >
                     {Number(item.dateText)}
                 </StyledCalenderItem>
@@ -47,14 +49,21 @@ export default function Calender({
     );
 }
 
-const StyledCalenderItem = styled.button`
+interface IStyledCalenderItemProps {
+    isSelected?: boolean;
+}
+
+const StyledCalenderItem = styled.button<IStyledCalenderItemProps>`
     width: 24px;
     height: 24px;
     text-align: center;
-    background-color: #fff;
+    background-color: ${(props) =>
+        props.isSelected ?? false ? theme.colors.point_green : '#fff'};
+    color: ${(props) => (props.isSelected ?? false ? '#fff' : '#000')};
     border: unset;
     :hover {
-        background-color: #e5e5e5;
+        background-color: ${(props) =>
+            !(props.isSelected ?? false) && '#e5e5e5'};
     }
     cursor: pointer;
 `;

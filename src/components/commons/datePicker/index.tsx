@@ -1,9 +1,9 @@
-import { daysText } from '@/constants/optioins';
 import { dateToYYMMDD } from '@/utils/dateUtils';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { BsFillCalendarPlusFill } from 'react-icons/bs';
 import Calender from './calender';
+import CalenderHeader from './calenderHeader';
 
 interface IDatePickerProps {
     today: Date;
@@ -44,7 +44,7 @@ export default function DatePicker({
             </StyledWrapperDatePicker>
             {isOpenCalender && (
                 <StyledCalender>
-                    <CalenderHaeder />
+                    <CalenderHeader />
                     <Calender
                         isSelectDay={isSelectDay}
                         onClickCalenderDay={onClickCalenderDay}
@@ -78,26 +78,4 @@ const StyledCalender = styled.div`
     padding: 8px 15px;
     z-index: 10;
     position: absolute;
-`;
-
-/**
- *
- * @returns 월, 화, 수, 목, 금, 토, 일 렌더링
- */
-const CalenderHaeder = () => {
-    return (
-        <>
-            {daysText.map((item) => (
-                <StyledCalenderHeader key={item}>{item}</StyledCalenderHeader>
-            ))}
-        </>
-    );
-};
-
-const StyledCalenderHeader = styled.div`
-    width: 24px;
-    height: 24px;
-    text-align: center;
-    background-color: #fff;
-    border: unset;
 `;
