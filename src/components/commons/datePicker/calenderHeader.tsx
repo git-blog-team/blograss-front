@@ -1,11 +1,15 @@
 import { daysText } from '@/constants/optioins';
+import { useGenerateId } from '@/hooks/commons';
 import styled from '@emotion/styled';
 
 export default function CalenderHeader() {
+    const key = useGenerateId({});
     return (
         <>
             {daysText.map((item) => (
-                <StyledCalenderHeader key={item}>{item}</StyledCalenderHeader>
+                <StyledCalenderHeader key={`${key}-${item}`}>
+                    {item}
+                </StyledCalenderHeader>
             ))}
         </>
     );

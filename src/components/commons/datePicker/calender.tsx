@@ -1,6 +1,7 @@
+import { useGenerateId } from '@/hooks/commons';
 import theme from '@/styles/theme';
 import {
-    YYMMDDToYYMM,
+    dateToYYMMDD,
     getDaysInMonth,
     getStartDayOfMonth,
 } from '@/utils/dateUtils';
@@ -19,6 +20,10 @@ export default function Calender({
 }: ICalenderProps) {
     const startDay = getStartDayOfMonth(isMonthFirstDay);
     const startDayArr = new Array(startDay).fill('');
+
+    const firstKey = useGenerateId({});
+    const secondKey = useGenerateId({});
+
     const daysInMonthArr = new Array(getDaysInMonth(isMonthFirstDay))
         .fill({
             dateText: 0,
@@ -27,18 +32,22 @@ export default function Calender({
         .map((_, index) => {
             return {
                 dateText: index + 1,
-                date: `${YYMMDDToYYMM(isMonthFirstDay)}-${index + 1}`,
+                date: dateToYYMMDD(
+                    new Date(isMonthFirstDay).setDate(index + 1),
+                ),
             };
         });
 
     return (
         <>
-            {startDayArr.map((item) => (
-                <StyledCalenderItem key={item}>{item}</StyledCalenderItem>
+            {startDayArr.map((item, index) => (
+                <StyledCalenderItem key={`${firstKey}-${index}`}>
+                    {item}
+                </StyledCalenderItem>
             ))}
             {daysInMonthArr.map((item, index) => (
                 <StyledCalenderItem
-                    key={index}
+                    key={`${secondKey}-${index}`}
                     onClick={() => {
                         onClickCalenderDay(item.date);
                     }}

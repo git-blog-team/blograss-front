@@ -3,7 +3,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 dayjs.extend(customParseFormat);
 
-export const dateToYYMMDD = (date: Date) => {
+export const dateToYYMMDD = (date: Date | number) => {
     return dayjs(date).format('YYYY-MM-DD');
 };
 export const dateToYYMM01 = (date: Date) => {
