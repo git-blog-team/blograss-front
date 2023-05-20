@@ -1,6 +1,11 @@
 import { type ValueTypeObject } from '@/types/interfaces/commons';
 import { type RefObject, useState } from 'react';
 import { type Editor } from '@toast-ui/react-editor';
+import {
+    type IUseGenerateId,
+    type ValueTypeObject,
+} from '@/types/interfaces/commons';
+import { useId, useState } from 'react';
 import { type ValueType } from 'react-select';
 
 export const useDropdowns = (initialvalue: ValueTypeObject) => {
@@ -42,4 +47,12 @@ export const useEditor = (initialValue: string) => {
     };
 
     return [editorContent, onChangeEditorContent] as const;
-};
+
+    export const useGenerateId = ({
+        prefix = '',
+        postfix = '',
+    }: IUseGenerateId) => {
+        const prefixString = prefix !== '' ? `${prefix}-` : '';
+        const postfixString = postfix !== '' ? `-${postfix}` : '';
+        return `${prefixString}${useId()}${postfixString}`;
+    };
