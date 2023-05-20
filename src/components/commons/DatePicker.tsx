@@ -7,20 +7,13 @@ import { BsFillCalendarPlusFill } from 'react-icons/bs';
 
 interface IDatePickerProps {
     today: Date;
-    onChange?: (date: Date) => void;
+    handlingPickDate?: (pickDate: string) => void;
 }
 
-const CalenderHaeder = () => {
-    return (
-        <>
-            {daysText.map((item) => (
-                <StyledCalenderHeader key={item}>{item}</StyledCalenderHeader>
-            ))}
-        </>
-    );
-};
-
-export default function DatePicker({ today, onChange }: IDatePickerProps) {
+export default function DatePicker({
+    today,
+    handlingPickDate,
+}: IDatePickerProps) {
     const [isOpenCalender, setIsOpenCalender] = useState(false);
     const [isSelectDay, setIsSelectDay] = useState(dateToYYMMDD(today));
 
@@ -48,7 +41,7 @@ export default function DatePicker({ today, onChange }: IDatePickerProps) {
             dateText: 0,
             date: `${startDay}-01`,
         })
-        .map((item, index) => {
+        .map((_, index) => {
             return {
                 dateText: index + 1,
                 date: `${dateToYYMM(today)}-${index + 1}`,
@@ -57,6 +50,9 @@ export default function DatePicker({ today, onChange }: IDatePickerProps) {
 
     const onClickCalenderDay = (item: string) => {
         setIsSelectDay(item);
+        if (handlingPickDate != null) {
+            handlingPickDate(item);
+        }
         setIsOpenCalender(false);
     };
 
@@ -72,21 +68,11 @@ export default function DatePicker({ today, onChange }: IDatePickerProps) {
             {isOpenCalender && (
                 <StyledCalender>
                     <CalenderHaeder />
-                    {startDayArr.map((item) => (
-                        <StyledCalenderItem key={item}>
-                            {item}
-                        </StyledCalenderItem>
-                    ))}
-                    {daysInMonthArr.map((item, index) => (
-                        <StyledCalenderItem
-                            key={index}
-                            onClick={() => {
-                                onClickCalenderDay(item.date);
-                            }}
-                        >
-                            {Number(item.dateText)}
-                        </StyledCalenderItem>
-                    ))}
+                    <Calender
+                        startDayArr={startDayArr}
+                        daysInMonthArr={daysInMonthArr}
+                        onClickCalenderDay={onClickCalenderDay}
+                    />
                 </StyledCalender>
             )}
         </StyledWrapperDatePicker>
@@ -112,6 +98,61 @@ const StyledCalender = styled.div`
     position: absolute;
 `;
 
+/**
+ *
+ * @returns 월, 화, 수, 목, 금, 토, 일 렌더링
+ */
+const CalenderHaeder = () => {
+    return (
+        <>
+            {daysText.map((item) => (
+                <StyledCalenderHeader key={item}>{item}</StyledCalenderHeader>
+            ))}
+        </>
+    );
+};
+
+const StyledCalenderHeader = styled.div`
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    background-color: #fff;
+    border: unset;
+`;
+
+/**
+ *
+ * @param param0
+ * @returns 달력 날짜 렌더링
+ */
+const Calender = ({
+    startDayArr,
+    daysInMonthArr,
+    onClickCalenderDay,
+}: {
+    startDayArr: string[];
+    daysInMonthArr: Array<{ dateText: number; date: string }>;
+    onClickCalenderDay: (item: string) => void;
+}) => {
+    return (
+        <>
+            {startDayArr.map((item) => (
+                <StyledCalenderItem key={item}>{item}</StyledCalenderItem>
+            ))}
+            {daysInMonthArr.map((item, index) => (
+                <StyledCalenderItem
+                    key={index}
+                    onClick={() => {
+                        onClickCalenderDay(item.date);
+                    }}
+                >
+                    {Number(item.dateText)}
+                </StyledCalenderItem>
+            ))}
+        </>
+    );
+};
+
 const StyledCalenderItem = styled.button`
     width: 24px;
     height: 24px;
@@ -122,12 +163,4 @@ const StyledCalenderItem = styled.button`
         background-color: #e5e5e5;
     }
     cursor: pointer;
-`;
-
-const StyledCalenderHeader = styled.div`
-    width: 24px;
-    height: 24px;
-    text-align: center;
-    background-color: #fff;
-    border: unset;
 `;
