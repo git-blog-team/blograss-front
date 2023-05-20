@@ -22,6 +22,9 @@ export default function DatePicker({
     const [isMonthFirstDay, setIsMonthFirstDay] = useState(dateToYYMM01(today));
 
     const onClickCalenderIcon = () => {
+        if (isOpenCalender) {
+            setIsMonthFirstDay(isSelectDay);
+        }
         setIsOpenCalender(!isOpenCalender);
     };
 
