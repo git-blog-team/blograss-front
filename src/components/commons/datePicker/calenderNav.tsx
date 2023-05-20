@@ -1,23 +1,23 @@
-import { YYMMDDToYYMM, dateToYYMMDD } from '@/utils/dateUtils';
+import { YYMMDDToYYMM, dateToYYMM01 } from '@/utils/dateUtils';
 import styled from '@emotion/styled';
 
 interface ICalenderNavProps {
-    currentMonth: string;
-    setIsCurrentMonth: (changeMonth: string) => void;
+    isMonthFirstDay: string;
+    setIsMonthFirstDay: (changeMonth: string) => void;
 }
 
 export default function CalenderNav({
-    currentMonth,
-    setIsCurrentMonth,
+    isMonthFirstDay,
+    setIsMonthFirstDay,
 }: ICalenderNavProps) {
     const handleCalenderMonth = (type: string) => {
-        const date = new Date(currentMonth);
+        const date = new Date(isMonthFirstDay);
         if (type === 'prev') {
             date.setMonth(date.getMonth() - 1);
         } else if (type === 'next') {
             date.setMonth(date.getMonth() + 1);
         }
-        setIsCurrentMonth(dateToYYMMDD(date));
+        setIsMonthFirstDay(dateToYYMM01(date));
     };
 
     return (
@@ -29,7 +29,7 @@ export default function CalenderNav({
             >
                 이전
             </button>
-            <span>{YYMMDDToYYMM(currentMonth)}</span>
+            <span>{YYMMDDToYYMM(isMonthFirstDay)}</span>
             <button
                 onClick={() => {
                     handleCalenderMonth('next');

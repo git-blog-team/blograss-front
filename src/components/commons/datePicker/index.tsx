@@ -1,4 +1,4 @@
-import { dateToYYMMDD } from '@/utils/dateUtils';
+import { dateToYYMM01, dateToYYMMDD } from '@/utils/dateUtils';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { BsFillCalendarPlusFill } from 'react-icons/bs';
@@ -21,7 +21,7 @@ export default function DatePicker({
      * 그 이후에는 YYMMDD 형식으로 관리
      */
     const [isSelectDay, setIsSelectDay] = useState(dateToYYMMDD(today));
-    const [currentMonth, setIsCurrentMonth] = useState(dateToYYMMDD(today));
+    const [isMonthFirstDay, setIsMonthFirstDay] = useState(dateToYYMM01(today));
 
     const onClickCalenderIcon = () => {
         setIsOpenCalender(!isOpenCalender);
@@ -47,11 +47,12 @@ export default function DatePicker({
             {isOpenCalender && (
                 <StyledCalender>
                     <CalenderNav
-                        currentMonth={currentMonth}
-                        setIsCurrentMonth={setIsCurrentMonth}
+                        isMonthFirstDay={isMonthFirstDay}
+                        setIsMonthFirstDay={setIsMonthFirstDay}
                     />
                     <CalenderHeader />
                     <Calender
+                        isMonthFirstDay={isMonthFirstDay}
                         isSelectDay={isSelectDay}
                         onClickCalenderDay={onClickCalenderDay}
                     />

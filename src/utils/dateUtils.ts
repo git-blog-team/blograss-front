@@ -6,6 +6,9 @@ dayjs.extend(customParseFormat);
 export const dateToYYMMDD = (date: Date) => {
     return dayjs(date).format('YYYY-MM-DD');
 };
+export const dateToYYMM01 = (date: Date) => {
+    return dayjs(date).format('YYYY-MM-01');
+};
 
 export const getDaysInMonth = (YYMMDD: string) => {
     return dayjs(YYMMDD).daysInMonth();

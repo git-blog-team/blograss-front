@@ -8,24 +8,26 @@ import styled from '@emotion/styled';
 
 interface ICalenderProps {
     isSelectDay: string;
+    isMonthFirstDay: string;
     onClickCalenderDay: (item: string) => void;
 }
 
 export default function Calender({
     isSelectDay,
+    isMonthFirstDay,
     onClickCalenderDay,
 }: ICalenderProps) {
-    const startDay = getStartDayOfMonth(isSelectDay);
+    const startDay = getStartDayOfMonth(isMonthFirstDay);
     const startDayArr = new Array(startDay).fill('');
-    const daysInMonthArr = new Array(getDaysInMonth(isSelectDay))
+    const daysInMonthArr = new Array(getDaysInMonth(isMonthFirstDay))
         .fill({
             dateText: 0,
-            date: `${startDay}-01`,
+            date: '',
         })
         .map((_, index) => {
             return {
                 dateText: index + 1,
-                date: `${YYMMDDToYYMM(isSelectDay)}-${index + 1}`,
+                date: `${YYMMDDToYYMM(isMonthFirstDay)}-${index + 1}`,
             };
         });
 
