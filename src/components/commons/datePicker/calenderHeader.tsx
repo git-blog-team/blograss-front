@@ -4,11 +4,11 @@ import { normalRowStyles } from '@/styles/flexModules';
 import styled from '@emotion/styled';
 
 export default function CalenderHeader() {
-    const key = useGenerateId({});
+    const calendarHeaderKey = useGenerateId({});
     return (
         <StyledWrapperHeader>
             {daysText.map((item) => (
-                <StyledCalenderHeader key={`${key}-${item}`}>
+                <StyledCalenderHeader key={`${calendarHeaderKey}-${item}`}>
                     {item}
                 </StyledCalenderHeader>
             ))}

@@ -8,10 +8,13 @@ export default function CalenderNav({
 }: ICalenderNavProps) {
     const handleCalenderMonth = (type: string) => {
         const date = new Date(isMonthFirstDay);
-        if (type === 'prev') {
-            date.setMonth(date.getMonth() - 1);
-        } else if (type === 'next') {
-            date.setMonth(date.getMonth() + 1);
+        switch (type) {
+            case 'prev':
+                date.setMonth(date.getMonth() - 1);
+                break;
+            case 'next':
+                date.setMonth(date.getMonth() + 1);
+                break;
         }
         setIsMonthFirstDay(dateToYYMM01(date));
     };

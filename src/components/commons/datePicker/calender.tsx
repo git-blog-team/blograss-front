@@ -18,10 +18,10 @@ export default function Calender({
     onClickCalenderDay,
 }: ICalenderProps) {
     const startDay = getStartDayOfMonth(isMonthFirstDay);
-    const startDayArr = new Array(startDay).fill('');
+    const emptyArray = new Array(startDay).fill('');
 
-    const firstKey = useGenerateId({});
-    const secondKey = useGenerateId({});
+    const emptyArrayKey = useGenerateId({});
+    const calenderItemKey = useGenerateId({});
 
     const daysInMonthArr = new Array(getDaysInMonth(isMonthFirstDay))
         .fill({
@@ -39,14 +39,14 @@ export default function Calender({
 
     return (
         <StyledWrapperMonth>
-            {startDayArr.map((item, index) => (
-                <StyledEmptyItem key={`${firstKey}-${index}`}>
+            {emptyArray.map((item, index) => (
+                <StyledEmptyItem key={`${emptyArrayKey}-${index}`}>
                     {item}
                 </StyledEmptyItem>
             ))}
             {daysInMonthArr.map((item, index) => (
                 <StyledCalenderItem
-                    key={`${secondKey}-${index}`}
+                    key={`${calenderItemKey}-${index}`}
                     onClick={() => {
                         onClickCalenderDay(item.date);
                     }}
