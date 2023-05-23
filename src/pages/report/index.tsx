@@ -18,7 +18,7 @@ export default function Report() {
         url: '/admin/login',
     });
 
-    const onClickMutation = (data) => {
+    const onClickMutation = () => {
         signUpMutation(
             {
                 adminId: 'm71kr@naver.com',
@@ -37,7 +37,7 @@ export default function Report() {
             },
         );
     };
-    const onClickLogin = (data) => {
+    const onClickLogin = () => {
         loginMutation(
             { adminId: 'm71kr@naver.com', password: 'test1234' },
             {

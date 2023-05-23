@@ -31,20 +31,18 @@ export default function CommonTable(props: ICommonTableProps) {
                 </thead>
                 <tbody>{children}</tbody>
             </table>
-            {isEmptyList !== null &&
-                isEmptyList !== undefined &&
-                isEmptyList && (
-                    <StyledNoData>
-                        <p>해당 데이터가 없습니다.</p>
-                        <Image
-                            src="/logo.png"
-                            height={120}
-                            width={120}
-                            alt="로고이미지"
-                            style={{ margin: ' 0 10px 2px 0' }}
-                        />
-                    </StyledNoData>
-                )}
+            {isEmptyList && (
+                <StyledNoData>
+                    <p>해당 데이터가 없습니다.</p>
+                    <Image
+                        src="/logo.png"
+                        height={120}
+                        width={120}
+                        alt="로고이미지"
+                        style={{ margin: ' 0 10px 2px 0' }}
+                    />
+                </StyledNoData>
+            )}
         </StyledCommonTable>
     );
 }
