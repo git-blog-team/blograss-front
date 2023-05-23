@@ -29,7 +29,7 @@ export const useReactQuery = (params: IUseReactQueryParams) => {
         [...uniqueKey],
         async () => {
             const response = await axios.get(url);
-            return response?.data;
+            return response;
         },
         {
             onError,

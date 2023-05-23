@@ -1,4 +1,4 @@
-import { type MenuPlacement, type ValueType } from 'react-select';
+import { MenuPlacement, ValueType } from 'react-select';
 
 // dropdown
 export type ValueTypeObject = Record<string, ValueType<any, any>>;
@@ -6,7 +6,7 @@ export type ValueTypeObject = Record<string, ValueType<any, any>>;
 export interface IDropDownProps {
     isDisabled?: boolean;
     name: string;
-    options: readonly  any[] | undefined;
+    options: readonly any[] | undefined;
     value: ValueTypeObject;
     onChange: (value: ValueType<any, any>, name: string) => void;
     direction?: MenuPlacement;
@@ -19,9 +19,8 @@ export interface INaviMenuItem {
     path: string;
 }
 
-
 export interface ICommonTableProps {
-    headers:Array<{ contents: string; width?: string }>;
+    headers: Array<{ contents: string; width?: string }>;
     children: JSX.Element;
     isEmptyList?: boolean;
 }
@@ -46,7 +45,8 @@ export interface EditorOptions {
     height?: string;
     type: 'html' | 'markdown';
     initialValue?: string;
-    onChange: (type: string, ref: any) => void;}
+    onChange: (type: string, ref: any) => void;
+}
 
 export interface IPaginationProps {
     totalItems: number;
@@ -136,4 +136,3 @@ export interface ICalenderNavProps {
     isMonthFirstDay: string;
     setIsMonthFirstDay: (changeMonth: string) => void;
 }
-
