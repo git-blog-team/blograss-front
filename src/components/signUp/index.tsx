@@ -6,6 +6,10 @@ import Button from '../commons/Button';
 import { useRouter } from 'next/router';
 import theme from '@/styles/theme';
 import styled from '@emotion/styled';
+import {
+    ColumnFlexStartCenter,
+    ColumnFlexStartFlexStart,
+} from '@/styles/flexModules';
 
 export default function SignUp() {
     const router = useRouter();
@@ -184,20 +188,14 @@ export default function SignUp() {
 }
 
 const StyledSignUpWrapper = styled.div`
+    ${ColumnFlexStartCenter()}
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
 `;
 
 const StyledInputWrapper = styled.div`
+    ${ColumnFlexStartFlexStart()};
     width: 100%;
     min-width: 360px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
     margin: 0px 0px 10px 0px;
 `;
 
