@@ -4,6 +4,8 @@ import { useReactQueryPost } from '@/api/http';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import Button from '../commons/Button';
 import { useRouter } from 'next/router';
+import theme from '@/styles/theme';
+import styled from '@emotion/styled';
 
 export default function SignUp() {
     const router = useRouter();
@@ -12,26 +14,62 @@ export default function SignUp() {
     });
 
     const [isEmail, setIsEmail] = useState('');
+    const [isShowEmailWarning, setIsShowEmailWarning] = useState<
+        null | boolean
+    >(null);
+
     const [isName, setIsName] = useState('');
+    const [isShowNameWarning, setIsShowNameWarning] = useState<null | boolean>(
+        null,
+    );
+
     const [isPassword, setIsPassword] = useState('');
-    const [isConfirmPassword, setIsConfirmPassword] = useState('');
+    const [isShowPasswordWarning, setIsShowPasswordWarning] = useState<
+        null | boolean
+    >(null);
+
+    const [, setIsConfirmPassword] = useState('');
+    const [isPasswordEqual, setIsPasswordEqual] = useState<null | boolean>(
+        null,
+    );
+
+    const validateEmail = (email: string) => {
+        const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+        return emailPattern.test(email);
+    };
 
     const onChangeEmail = ({ target }: ChangeEvent<HTMLInputElement>) => {
         setIsEmail(target.value);
+        setIsShowEmailWarning(validateEmail(target.value));
+    };
+
+    const validateName = (name: string) => {
+        return name.length > 1;
     };
 
     const onChangeName = ({ target }: ChangeEvent<HTMLInputElement>) => {
         setIsName(target.value);
+        setIsShowNameWarning(validateName(target.value));
+    };
+
+    const validatePasswordLength = (password: string) => {
+        return password.length > 6;
     };
 
     const onChangePassword = ({ target }: ChangeEvent<HTMLInputElement>) => {
         setIsPassword(target.value);
+        setIsShowPasswordWarning(validatePasswordLength(target.value));
+    };
+
+    const validatePasswordIsEqual = (password: string) => {
+        return isPassword === password;
     };
 
     const onChangeConfirmPassword = ({
         target,
     }: ChangeEvent<HTMLInputElement>) => {
         setIsConfirmPassword(target.value);
+        setIsPasswordEqual(validatePasswordIsEqual(target.value));
     };
 
     const onSubmitSignUp = (event: FormEvent) => {
@@ -57,9 +95,12 @@ export default function SignUp() {
     const isButtonDisabled = () => {
         return (
             isLoading ||
-            isPassword !== isConfirmPassword ||
-            isPassword === '' ||
-            isConfirmPassword === ''
+            !(
+                isShowEmailWarning &&
+                isShowNameWarning &&
+                isShowPasswordWarning &&
+                isPasswordEqual
+            )
         );
     };
 
@@ -67,26 +108,59 @@ export default function SignUp() {
         <StyledCommonWrapper>
             <StyledCommonMenuTitle>SignUpPage</StyledCommonMenuTitle>
             <form action="post" onSubmit={onSubmitSignUp}>
-                <Input id="user-email" type="text" onChange={onChangeEmail}>
+                <Input
+                    id="user-email"
+                    type="text"
+                    onChange={onChangeEmail}
+                    placeholder="이메일 주소"
+                >
                     이메일
                 </Input>
-                <Input id="user-name" type="text" onChange={onChangeName}>
+                {isShowEmailWarning === false && (
+                    <StyledWarningText>
+                        이메일 형식이 아닙니다.
+                    </StyledWarningText>
+                )}
+                <Input
+                    id="user-name"
+                    type="text"
+                    onChange={onChangeName}
+                    placeholder="이름(3글자 이상)"
+                >
                     이름
                 </Input>
+                {isShowNameWarning === false && (
+                    <StyledWarningText>
+                        최소 3글자 이상 입력해주세요.
+                    </StyledWarningText>
+                )}
                 <Input
                     id="user-password"
                     type="password"
                     onChange={onChangePassword}
+                    placeholder="비밀번호(8자리 이상)"
                 >
                     비밀번호
                 </Input>
+
+                {isShowPasswordWarning === false && (
+                    <StyledWarningText>
+                        최소 8글자 이상 입력해주세요.
+                    </StyledWarningText>
+                )}
                 <Input
                     id="user-confirm-password"
                     type="password"
                     onChange={onChangeConfirmPassword}
+                    placeholder="비밀번호 확인"
                 >
                     비밀번호 확인
                 </Input>
+                {isPasswordEqual === false && (
+                    <StyledWarningText>
+                        비밀번호가 일치하지 않습니다.
+                    </StyledWarningText>
+                )}
                 <Button type="submit" disabled={isButtonDisabled()}>
                     회원가입
                 </Button>
@@ -94,3 +168,10 @@ export default function SignUp() {
         </StyledCommonWrapper>
     );
 }
+
+const StyledWarningText = styled.p`
+    font-size: 12px;
+    color: ${theme.colors.point_orange};
+    margin: 5px 0px 0px 0px;
+    font-weight: bold;
+`;
