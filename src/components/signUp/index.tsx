@@ -44,7 +44,7 @@ export default function SignUp() {
     };
 
     const validateName = (name: string) => {
-        return name.length > 1;
+        return name.length > 2;
     };
 
     const onChangeName = ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +53,7 @@ export default function SignUp() {
     };
 
     const validatePasswordLength = (password: string) => {
-        return password.length > 6;
+        return password.length > 7;
     };
 
     const onChangePassword = ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -106,68 +106,100 @@ export default function SignUp() {
 
     return (
         <StyledCommonWrapper>
-            <StyledCommonMenuTitle>SignUpPage</StyledCommonMenuTitle>
-            <form action="post" onSubmit={onSubmitSignUp}>
-                <Input
-                    id="user-email"
-                    type="text"
-                    onChange={onChangeEmail}
-                    placeholder="이메일 주소"
-                >
-                    이메일
-                </Input>
-                {isShowEmailWarning === false && (
-                    <StyledWarningText>
-                        이메일 형식이 아닙니다.
-                    </StyledWarningText>
-                )}
-                <Input
-                    id="user-name"
-                    type="text"
-                    onChange={onChangeName}
-                    placeholder="이름(3글자 이상)"
-                >
-                    이름
-                </Input>
-                {isShowNameWarning === false && (
-                    <StyledWarningText>
-                        최소 3글자 이상 입력해주세요.
-                    </StyledWarningText>
-                )}
-                <Input
-                    id="user-password"
-                    type="password"
-                    onChange={onChangePassword}
-                    placeholder="비밀번호(8자리 이상)"
-                >
-                    비밀번호
-                </Input>
+            <StyledSignUpWrapper>
+                <StyledCommonMenuTitle>SignUpPage</StyledCommonMenuTitle>
+                <form action="post" onSubmit={onSubmitSignUp}>
+                    <StyledInputWrapper>
+                        <Input
+                            id="user-email"
+                            type="text"
+                            onChange={onChangeEmail}
+                            placeholder="이메일 주소"
+                        >
+                            이메일
+                        </Input>
+                        {isShowEmailWarning === false && (
+                            <StyledWarningText>
+                                이메일 형식이 아닙니다.
+                            </StyledWarningText>
+                        )}
+                    </StyledInputWrapper>
+                    <StyledInputWrapper>
+                        <Input
+                            id="user-name"
+                            type="text"
+                            onChange={onChangeName}
+                            placeholder="이름(3글자 이상)"
+                        >
+                            이름
+                        </Input>
+                        {isShowNameWarning === false && (
+                            <StyledWarningText>
+                                최소 3글자 이상 입력해주세요.
+                            </StyledWarningText>
+                        )}
+                    </StyledInputWrapper>
+                    <StyledInputWrapper>
+                        <Input
+                            id="user-password"
+                            type="password"
+                            onChange={onChangePassword}
+                            placeholder="비밀번호(8자리 이상)"
+                        >
+                            비밀번호
+                        </Input>
 
-                {isShowPasswordWarning === false && (
-                    <StyledWarningText>
-                        최소 8글자 이상 입력해주세요.
-                    </StyledWarningText>
-                )}
-                <Input
-                    id="user-confirm-password"
-                    type="password"
-                    onChange={onChangeConfirmPassword}
-                    placeholder="비밀번호 확인"
-                >
-                    비밀번호 확인
-                </Input>
-                {isPasswordEqual === false && (
-                    <StyledWarningText>
-                        비밀번호가 일치하지 않습니다.
-                    </StyledWarningText>
-                )}
-                <Button type="submit" disabled={isButtonDisabled()}>
-                    회원가입
-                </Button>
-            </form>
+                        {isShowPasswordWarning === false && (
+                            <StyledWarningText>
+                                최소 8글자 이상 입력해주세요.
+                            </StyledWarningText>
+                        )}
+                    </StyledInputWrapper>
+                    <StyledInputWrapper>
+                        <Input
+                            id="user-confirm-password"
+                            type="password"
+                            onChange={onChangeConfirmPassword}
+                            placeholder="비밀번호 확인"
+                        >
+                            비밀번호 확인
+                        </Input>
+                        {isPasswordEqual === false && (
+                            <StyledWarningText>
+                                비밀번호가 일치하지 않습니다.
+                            </StyledWarningText>
+                        )}
+                    </StyledInputWrapper>
+                    <Button
+                        type="submit"
+                        disabled={isButtonDisabled()}
+                        style={{ width: '100%' }}
+                    >
+                        회원가입
+                    </Button>
+                </form>
+            </StyledSignUpWrapper>
         </StyledCommonWrapper>
     );
 }
+
+const StyledSignUpWrapper = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+`;
+
+const StyledInputWrapper = styled.div`
+    width: 100%;
+    min-width: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 0px 0px 10px 0px;
+`;
 
 const StyledWarningText = styled.p`
     font-size: 12px;
