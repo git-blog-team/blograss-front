@@ -2,11 +2,11 @@ import { StyledCommonMenuTitle, StyledCommonWrapper } from '@/styles/commons';
 import Input from '../commons/Input';
 import { useReactQueryPost } from '@/api/http';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import Cookies from 'js-cookie';
-import { TOKEN } from '@/constants/common';
 import Button from '../commons/Button';
+import { useRouter } from 'next/router';
 
 export default function SignUp() {
+    const router = useRouter();
     const { mutation: signUpMutation, isLoading } = useReactQueryPost({
         url: '/admin/signup',
     });
@@ -44,14 +44,22 @@ export default function SignUp() {
                 secretKey: 'f9ebfe89-52e4-450d-8fa4-6cee5eb6008c',
             },
             {
-                onSuccess: (res) => {
-                    Cookies.set(TOKEN, res.token);
-                    alert('회원가입 성공쓰');
+                onSuccess: () => {
+                    router.push('/login');
                 },
                 onError: (error) => {
-                    !!error.response && console.log(error.response);
+                    !!error.response && alert(error.response);
                 },
             },
+        );
+    };
+
+    const isButtonDisabled = () => {
+        return (
+            isLoading ||
+            isPassword !== isConfirmPassword ||
+            isPassword === '' ||
+            isConfirmPassword === ''
         );
     };
 
@@ -79,8 +87,8 @@ export default function SignUp() {
                 >
                     비밀번호 확인
                 </Input>
-                <Button type="submit" disabled={isLoading}>
-                    회워가입
+                <Button type="submit" disabled={isButtonDisabled()}>
+                    회원가입
                 </Button>
             </form>
         </StyledCommonWrapper>
