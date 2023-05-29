@@ -76,6 +76,11 @@ export default function SignUp() {
         setIsPasswordEqual(validatePasswordIsEqual(target.value));
     };
 
+    /**
+     * secretKey는 어드민 회원가입 시 필요한 키값입니다.
+     * @param event
+     */
+
     const onSubmitSignUp = (event: FormEvent) => {
         event.preventDefault();
         signUpMutation(
