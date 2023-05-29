@@ -47,7 +47,7 @@ export default function CommonTable(props: ICommonTableProps) {
     );
 }
 
-const StyledCommonTable = styled.div`
+export const StyledCommonTable = styled.div`
     position: relative;
     table {
         border-radius: 5px;
