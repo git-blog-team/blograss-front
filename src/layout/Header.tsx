@@ -2,8 +2,18 @@ import { centerRowStyles, spaceBetweenRowStyles } from '@/styles/flexModules';
 import styled from '@emotion/styled';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
+
+interface IHeaderReduxState {
+    user: {
+        userName: string;
+        accessToken: string;
+    };
+}
 
 export default function Header() {
+    const { userName } = useSelector((state: IHeaderReduxState) => state.user);
+
     return (
         <StyledHeader>
             <Head>
@@ -21,7 +31,7 @@ export default function Header() {
                     Blograss<span>ADMIN</span>
                 </p>
                 <div>
-                    우진택님 고생하십니다. 🥬 <button>로그아웃</button>
+                    {userName}님 🥬 <button>로그아웃</button>
                 </div>
             </div>
         </StyledHeader>
