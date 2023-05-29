@@ -1,7 +1,5 @@
+import Login from '@/components/login';
+
 export default function LogInPage() {
-    return (
-        <div>
-            <h1>로그인 페이지</h1>
-        </div>
-    );
+    return <Login />;
 }
