@@ -1,16 +1,12 @@
 import { useReactQuery, useReactQueryPost } from '@/api/http';
 import CommonTable from '@/components/commons/Table';
 import { TOKEN } from '@/constants/common';
-import { sampleReportData } from '@/constants/sampleReportData';
 import { StyledCommonMenuTitle, StyledCommonWrapper } from '@/styles/commons';
 import styled from '@emotion/styled';
 import Cookies from 'js-cookie';
 import _ from 'lodash';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
 export default function Report() {
-    const router = useRouter();
     const { mutation: signUpMutation } = useReactQueryPost({
         url: '/admin/signup',
     });
