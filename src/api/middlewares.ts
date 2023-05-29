@@ -1,4 +1,4 @@
-import { TOKEN } from '@/constants/common';
+import { ACCESS_TOKEN } from '@/constants/common';
 import Axios from 'axios';
 
 import Cookies from 'js-cookie';
@@ -14,7 +14,7 @@ axios.interceptors.request.use(
 
     (conf) => {
         conf.headers = conf.headers ?? {};
-        const token = Cookies.get(TOKEN);
+        const token = Cookies.get(ACCESS_TOKEN);
         // 로컬스토리지에서 token 가져옴
         conf.headers['Content-Type'] = 'application/json; charset=utf-8';
         // 서버에게 json 형식을 사용할거라고 알려줌

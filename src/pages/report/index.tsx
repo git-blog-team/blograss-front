@@ -1,6 +1,6 @@
 import { useReactQuery, useReactQueryPost } from '@/api/http';
 import CommonTable from '@/components/commons/Table';
-import { TOKEN } from '@/constants/common';
+import { ACCESS_TOKEN } from '@/constants/common';
 import { StyledCommonMenuTitle, StyledCommonWrapper } from '@/styles/commons';
 import styled from '@emotion/styled';
 import Cookies from 'js-cookie';
@@ -24,7 +24,7 @@ export default function Report() {
             },
             {
                 onSuccess: (res) => {
-                    Cookies.set(TOKEN, res.token);
+                    Cookies.set(ACCESS_TOKEN, res.token);
                     alert('회원가입 성공쓰');
                 },
                 onError: (error) => {
@@ -39,7 +39,7 @@ export default function Report() {
             {
                 onSuccess: (res) => {
                     const token = res.result[0].accessToken;
-                    Cookies.set(TOKEN, token);
+                    Cookies.set(ACCESS_TOKEN, token);
                     alert('로그인 성공쓰');
                     refetch();
                 },
