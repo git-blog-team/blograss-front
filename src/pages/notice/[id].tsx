@@ -8,6 +8,8 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import Button, { StyledButton } from '@/components/commons/Button';
 import { NOTICE_CREATE_PAGE_URL, NOTICE_PAGE_URL } from '@/constants/utl';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 
 const EditorRead = dynamic(
     async () => await import('@/components/commons/EditorRead'),
@@ -29,6 +31,7 @@ export default function NoticeDetailPage() {
     const { mutation: deleteNotice } = useReactQueryDelete({
         url: NOTICE_API_URL,
     });
+
     const { title, noticeId, content, createdAt, imageIds } =
         data?.result?.[0] ?? '';
 
@@ -41,7 +44,11 @@ export default function NoticeDetailPage() {
 
     const onClickDelete = () => {
         deleteNotice(
-            { noticeIds: [noticeId] },
+            {
+                data: {
+                    noticeIds: [noticeId],
+                },
+            },
             {
                 onSuccess: () => {
                     alert('공지가 삭제되었습니다.');
