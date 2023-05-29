@@ -14,21 +14,17 @@ export default function EditorWrite(options: EditorOptions) {
     const imgUpload = async (file: File, callback: HookCallback) => {
         const formData = new FormData();
         formData.append('file', file);
-        console.log('이미지 파일 정보', file);
-        console.log('폼데이터', formData);
         await axios({
             method: 'post',
             url: 'https://api.blograss.com/image',
             data: formData,
         })
             .then((res: any) => {
-                console.log(res);
                 const result = `https://blograss-bucket.s3.ap-northeast-2.amazonaws.com/images/${res.result[0]}`;
                 callback(result, 'alt_text');
             })
             .catch((error) => {
-                console.log('폼데이터', formData);
-                console.log(error);
+                alert(error);
             });
     };
 
@@ -52,7 +48,7 @@ export default function EditorWrite(options: EditorOptions) {
                 initialValue={initialValue}
                 previewStyle="vertical"
                 height={height}
-                initialEditType="wysiwyg"
+                initialEditType="markdown"
                 useCommandShortcut={false}
                 hideModeSwitch={true}
             />

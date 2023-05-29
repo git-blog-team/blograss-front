@@ -1,15 +1,7 @@
 import { StyledCommonMenuTitle, StyledCommonWrapper } from '@/styles/commons';
 import styled from '@emotion/styled';
-import { useEditor } from '@/hooks/commons';
-import dynamic from 'next/dynamic';
-
-const EditorWrite = dynamic(
-    async () => await import('@/components/commons/EditorWrite'),
-    { ssr: false },
-);
 
 export default function Home() {
-    const [, onChangeEditorContent] = useEditor('');
     return (
         <StyledMain>
             <StyledCommonWrapper>
@@ -18,7 +10,6 @@ export default function Home() {
                 </StyledTopContents>
                 <div>dddd</div>
             </StyledCommonWrapper>
-            <EditorWrite type={'html'} onChange={onChangeEditorContent} />
         </StyledMain>
     );
 }
