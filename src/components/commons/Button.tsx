@@ -6,7 +6,7 @@ import {
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
-const StyledButton = styled.button<IPropsStyledButton>`
+export const StyledButton = styled.button<IPropsStyledButton>`
     padding: 10px 20px 10px 20px;
     background-color: #fff;
     border: 1px solid ${(props) => props.buttonStyle.normal};
