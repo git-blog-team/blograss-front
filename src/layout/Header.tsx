@@ -12,7 +12,9 @@ interface IHeaderReduxState {
 }
 
 export default function Header() {
-    const { userName } = useSelector((state: IHeaderReduxState) => state.user);
+    const { userName, accessToken } = useSelector(
+        (state: IHeaderReduxState) => state.user,
+    );
 
     return (
         <StyledHeader>
@@ -31,7 +33,8 @@ export default function Header() {
                     Blograss<span>ADMIN</span>
                 </p>
                 <div>
-                    {userName}님 🥬 <button>로그아웃</button>
+                    {userName}님 🥬{' '}
+                    <button>{accessToken ? '로그아웃' : '로그인'}</button>
                 </div>
             </div>
         </StyledHeader>
