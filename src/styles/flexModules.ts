@@ -29,3 +29,25 @@ export const normalColumnStyles = () => css`
     justify-content: center;
     flex-direction: column;
 `;
+
+/**
+ * 네이밍 규칙을 아래와 같이 정의 했습니다.
+ * - FlexDirection
+ * - JustifyContent
+ * - AlignItems
+ * @returns
+ */
+
+export const ColumnFlexStartFlexStart = () => css`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+`;
+
+export const ColumnFlexStartCenter = () => css`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+`;
