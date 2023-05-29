@@ -11,10 +11,13 @@ import {
     ColumnFlexStartFlexStart,
 } from '@/styles/flexModules';
 import Cookies from 'js-cookie';
-import { TOKEN } from '@/constants/common';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/common';
+import { updateUserData } from '@/store/userSlice';
+import { useDispatch } from 'react-redux';
 
 export default function Login() {
     const router = useRouter();
+    const dispatch = useDispatch();
     const { mutation: loginMutation, isLoading } = useReactQueryPost({
         url: '/admin/login',
     });
@@ -62,7 +65,15 @@ export default function Login() {
             },
             {
                 onSuccess: (res) => {
-                    Cookies.set(TOKEN, res.token);
+                    Cookies.set(ACCESS_TOKEN, res.result[0].accessToken, {
+                        expires: 7,
+                        secure: true,
+                    });
+                    Cookies.set(REFRESH_TOKEN, res.result[0].refreshToken, {
+                        expires: 7,
+                        secure: true,
+                    });
+                    dispatch(updateUserData(res.result[0]));
                     router.push('/');
                 },
                 onError: (error) => {
@@ -79,7 +90,7 @@ export default function Login() {
     return (
         <StyledCommonWrapper>
             <StyledSignUpWrapper>
-                <StyledCommonMenuTitle>SignUpPage</StyledCommonMenuTitle>
+                <StyledCommonMenuTitle>LogIn</StyledCommonMenuTitle>
                 <form action="post" onSubmit={onSubmitLogin}>
                     <StyledInputWrapper>
                         <Input
