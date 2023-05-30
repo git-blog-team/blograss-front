@@ -1,4 +1,5 @@
 import { useReactQueryDelete } from '@/api/http';
+import { LOGIN_PAGE_URL } from '@/constants/utl';
 import { centerRowStyles, spaceBetweenRowStyles } from '@/styles/flexModules';
 import styled from '@emotion/styled';
 import Head from 'next/head';
@@ -21,16 +22,15 @@ export default function Header() {
 
     const { mutation: logoutMutation, isLoading } = useReactQueryDelete({
         url: '/admin/logout',
+        onSuccess: () => {
+            router.push(LOGIN_PAGE_URL);
+        },
     });
 
     const router = useRouter();
 
     const onClickLogOut = () => {
-        logoutMutation({
-            onSuccess: () => {
-                router.push('/');
-            },
-        });
+        logoutMutation({});
     };
 
     return (
