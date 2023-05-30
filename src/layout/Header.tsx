@@ -1,7 +1,10 @@
+import { useReactQueryDelete } from '@/api/http';
 import { centerRowStyles, spaceBetweenRowStyles } from '@/styles/flexModules';
 import styled from '@emotion/styled';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 
 interface IHeaderReduxState {
@@ -16,25 +19,47 @@ export default function Header() {
         (state: IHeaderReduxState) => state.user,
     );
 
+    const { mutation: logoutMutation, isLoading } = useReactQueryDelete({
+        url: '/admin/logout',
+    });
+
+    const router = useRouter();
+
+    const onClickLogOut = () => {
+        logoutMutation({
+            onSuccess: () => {
+                router.push('/');
+            },
+        });
+    };
+
     return (
         <StyledHeader>
             <Head>
                 <title>Blograss</title>
             </Head>
             <div>
-                <p>
-                    <Image
-                        src="/logo.png"
-                        height={30}
-                        width={30}
-                        alt="로고이미지"
-                        style={{ margin: ' 0 10px 2px 0' }}
-                    />
-                    Blograss<span>ADMIN</span>
-                </p>
+                <a href="/">
+                    <p>
+                        <Image
+                            src="/logo.png"
+                            height={30}
+                            width={30}
+                            alt="로고이미지"
+                            style={{ margin: ' 0 10px 2px 0' }}
+                        />
+                        Blograss<span>ADMIN</span>
+                    </p>
+                </a>
                 <div>
                     {userName}님 🥬{' '}
-                    <button>{accessToken ? '로그아웃' : '로그인'}</button>
+                    {accessToken ? (
+                        <button onClick={onClickLogOut}>로그아웃</button>
+                    ) : (
+                        <Link href="/login">
+                            <button>로그인</button>
+                        </Link>
+                    )}
                 </div>
             </div>
         </StyledHeader>
@@ -51,18 +76,22 @@ const StyledHeader = styled.div`
         min-width: 1200px;
         width: 90%;
         height: 100%;
-        > p {
-            color: ${(props) => props.theme.colors.point_yellow_green2};
-            font-size: 50px;
-            font-weight: 700;
+        > a {
+            cursor: pointer;
+            text-decoration: none;
+            > p {
+                color: ${(props) => props.theme.colors.point_yellow_green2};
+                font-size: 50px;
+                font-weight: 700;
 
-            > span {
-                font-size: 15px;
-                margin: 0 0 0 7px;
+                > span {
+                    font-size: 15px;
+                    margin: 0 0 0 7px;
+                }
             }
         }
         > div {
-            > button {
+            button {
                 box-shadow: 0px 0px 2px
                     ${(props) => props.theme.colors.point_yellow_green2};
                 background-color: unset;

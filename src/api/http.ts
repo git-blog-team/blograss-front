@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from './middlewares';
 import { type AxiosError } from 'axios';
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     type IUseReactQueryMutationParams,
     type IUseReactQueryParams,
@@ -27,11 +27,13 @@ export const useReactQuery = (props: IUseReactQueryParams) => {
         AxiosError<{ details: string }>,
         any
     >(
-        [...uniqueKey,params],
+        [...uniqueKey, params],
         async () => {
-            const response = await axios.get( !!url && !!params
-                ? `${url}?${qs.stringify(params as Record<string, number>)}`
-                : url,);
+            const response = await axios.get(
+                !!url && !!params
+                    ? `${url}?${qs.stringify(params as Record<string, number>)}`
+                    : url,
+            );
             return response;
         },
         {
@@ -53,7 +55,7 @@ export const useReactQuery = (props: IUseReactQueryParams) => {
         handleRenderLater();
         // renderLater값 바뀌면 바로 리랜더링되면서 useQuery요청 부름
     }, [renderLater]);
- 
+
     return {
         data,
         error,
