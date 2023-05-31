@@ -37,10 +37,11 @@ const StyledTopNavigation = styled.nav`
     background-color: white;
     height: 40px;
     border-bottom: 1px solid ${(props) => props.theme.colors.line_default};
-
+    min-width: 1280px;
+    width: 100%;
     > ul {
         ${normalRowStyles};
-        width: 90%;
+        width: 1280px;
         height: 100%;
         padding: 0 3rem;
     }

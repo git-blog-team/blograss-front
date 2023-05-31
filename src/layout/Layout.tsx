@@ -21,6 +21,7 @@ export default function Layout(props: { children: ReactNode }) {
 
 const StyledLayout = styled.div`
     width: 100vw;
+    min-width: 1320px;
 `;
 const Body = styled.div`
     ${centerRowStyles}
