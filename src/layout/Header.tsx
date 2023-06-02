@@ -10,13 +10,15 @@ import { useSelector } from 'react-redux';
 
 interface IHeaderReduxState {
     user: {
-        userName: string;
         accessToken: string;
+        adminInfo: {
+            adminName: string;
+        };
     };
 }
 
 export default function Header() {
-    const { userName, accessToken } = useSelector(
+    const { adminInfo, accessToken } = useSelector(
         (state: IHeaderReduxState) => state.user,
     );
 
@@ -52,9 +54,11 @@ export default function Header() {
                     </p>
                 </a>
                 <div>
-                    {userName}님 🥬{' '}
                     {accessToken ? (
-                        <button onClick={onClickLogOut}>로그아웃</button>
+                        <>
+                            {adminInfo?.adminName}님 🥬
+                            <button onClick={onClickLogOut}>로그아웃</button>
+                        </>
                     ) : (
                         <Link href="/login">
                             <button>로그인</button>
