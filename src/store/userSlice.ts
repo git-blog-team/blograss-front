@@ -16,15 +16,15 @@ export const userDataSlice = createSlice({
     initialState,
     reducers: {
         updateUserData: (state, action) => {
-            return {
+            state = {
                 ...state,
                 ...action.payload,
             };
+            return state;
         },
     },
 });
 
-// Action creators are generated for each case reducer function
 export const { updateUserData } = userDataSlice.actions;
 
 export default userDataSlice.reducer;
