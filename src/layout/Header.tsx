@@ -45,11 +45,12 @@ const StyledHeader = styled.div`
     background-color: white;
     border-bottom: 1px solid ${(props) => props.theme.colors.line_default};
     height: 80px;
+    min-width: 1280px;
+    width: 100%;
 
     > div {
         ${spaceBetweenRowStyles}
-        min-width: 1200px;
-        width: 90%;
+        width: 1200px;
         height: 100%;
         > p {
             color: ${(props) => props.theme.colors.point_yellow_green2};
