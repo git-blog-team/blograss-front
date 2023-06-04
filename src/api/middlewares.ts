@@ -14,15 +14,19 @@ axios.interceptors.request.use(
 
     (conf) => {
         conf.headers = conf.headers ?? {};
-        const token = Cookies.get(ACCESS_TOKEN);
+        const accessToken = Cookies.get(ACCESS_TOKEN);
+        const refreshToken = Cookies.get('refreshToken');
         // 로컬스토리지에서 token 가져옴
         // conf.headers['Content-Type'] = 'application/json; charset=utf-8';
         // 이미지는 json 아니에요~
         // 서버에게 json 형식을 사용할거라고 알려줌
 
-        if (token !== undefined) {
-            conf.headers.Authorization = `Bearer ${token}`;
+        if (accessToken !== undefined) {
+            conf.headers.Authorization = `Bearer ${accessToken}`;
             // 토큰값이 있으면 헤더 Authorization에 넣어줌
+        }
+        if (refreshToken !== undefined) {
+            conf.headers.RAuthorization = `Bearer ${refreshToken}`;
         }
         return conf;
     },
