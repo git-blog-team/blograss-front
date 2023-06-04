@@ -16,7 +16,8 @@ axios.interceptors.request.use(
         conf.headers = conf.headers ?? {};
         const token = Cookies.get(ACCESS_TOKEN);
         // 로컬스토리지에서 token 가져옴
-        conf.headers['Content-Type'] = 'application/json; charset=utf-8';
+        // conf.headers['Content-Type'] = 'application/json; charset=utf-8';
+        // 이미지는 json 아니에요~
         // 서버에게 json 형식을 사용할거라고 알려줌
 
         if (token !== undefined) {
