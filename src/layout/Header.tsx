@@ -1,27 +1,69 @@
+import { useReactQueryDelete } from '@/api/http';
+import { LOGIN_PAGE_URL } from '@/constants/utl';
 import { centerRowStyles, spaceBetweenRowStyles } from '@/styles/flexModules';
 import styled from '@emotion/styled';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+
+interface IHeaderReduxState {
+    user: {
+        accessToken: string;
+        adminInfo: {
+            adminName: string;
+        };
+    };
+}
 
 export default function Header() {
+    const { adminInfo, accessToken } = useSelector(
+        (state: IHeaderReduxState) => state.user,
+    );
+
+    const { mutation: logoutMutation, isLoading } = useReactQueryDelete({
+        url: '/admin/logout',
+        onSuccess: () => {
+            router.push(LOGIN_PAGE_URL);
+        },
+    });
+
+    const router = useRouter();
+
+    const onClickLogOut = () => {
+        logoutMutation({});
+    };
+
     return (
         <StyledHeader>
             <Head>
                 <title>Blograss</title>
             </Head>
             <div>
-                <p>
-                    <Image
-                        src="/logo.png"
-                        height={30}
-                        width={30}
-                        alt="로고이미지"
-                        style={{ margin: ' 0 10px 2px 0' }}
-                    />
-                    Blograss<span>ADMIN</span>
-                </p>
+                <a href="/">
+                    <p>
+                        <Image
+                            src="/logo.png"
+                            height={30}
+                            width={30}
+                            alt="로고이미지"
+                            style={{ margin: ' 0 10px 2px 0' }}
+                        />
+                        Blograss<span>ADMIN</span>
+                    </p>
+                </a>
                 <div>
-                    우진택님 고생하십니다. 🥬 <button>로그아웃</button>
+                    {accessToken ? (
+                        <>
+                            {adminInfo?.adminName}님 🥬
+                            <button onClick={onClickLogOut}>로그아웃</button>
+                        </>
+                    ) : (
+                        <Link href="/login">
+                            <button>로그인</button>
+                        </Link>
+                    )}
                 </div>
             </div>
         </StyledHeader>
@@ -32,24 +74,29 @@ const StyledHeader = styled.div`
     background-color: white;
     border-bottom: 1px solid ${(props) => props.theme.colors.line_default};
     height: 80px;
+    min-width: 1280px;
+    width: 100%;
 
     > div {
         ${spaceBetweenRowStyles}
-        min-width: 1200px;
-        width: 90%;
+        width: 1200px;
         height: 100%;
-        > p {
-            color: ${(props) => props.theme.colors.point_yellow_green2};
-            font-size: 50px;
-            font-weight: 700;
+        > a {
+            cursor: pointer;
+            text-decoration: none;
+            > p {
+                color: ${(props) => props.theme.colors.point_yellow_green2};
+                font-size: 50px;
+                font-weight: 700;
 
-            > span {
-                font-size: 15px;
-                margin: 0 0 0 7px;
+                > span {
+                    font-size: 15px;
+                    margin: 0 0 0 7px;
+                }
             }
         }
         > div {
-            > button {
+            button {
                 box-shadow: 0px 0px 2px
                     ${(props) => props.theme.colors.point_yellow_green2};
                 background-color: unset;

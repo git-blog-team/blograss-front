@@ -8,8 +8,8 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import Button, { StyledButton } from '@/components/commons/Button';
 import { NOTICE_CREATE_PAGE_URL, NOTICE_PAGE_URL } from '@/constants/utl';
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+import _ from 'lodash';
+import { DEBOUNCE_OPTION, DEBOUNCE_TIME } from '@/constants/common';
 
 const EditorRead = dynamic(
     async () => await import('@/components/commons/EditorRead'),
@@ -42,22 +42,27 @@ export default function NoticeDetailPage() {
         });
     };
 
-    const onClickDelete = () => {
-        deleteNotice(
-            {
-                data: {
-                    noticeIds: [noticeId],
+    const onClickDelete = _.debounce(
+        () => {
+            deleteNotice(
+                {
+                    data: {
+                        noticeIds: [noticeId],
+                    },
                 },
-            },
-            {
-                onSuccess: () => {
-                    alert('공지가 삭제되었습니다.');
-                    router.push(NOTICE_PAGE_URL);
+                {
+                    onSuccess: () => {
+                        alert('공지가 삭제되었습니다.');
+                        router.push(NOTICE_PAGE_URL);
+                    },
+                    onError: (err) => console.log(err),
                 },
-                onError: (err) => console.log(err),
-            },
-        );
-    };
+            );
+        },
+        DEBOUNCE_TIME,
+        DEBOUNCE_OPTION,
+    );
+
     return (
         <StyledNoticeDetail>
             <StyledCommonWrapper>

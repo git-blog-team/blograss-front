@@ -1,13 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from './middlewares';
 import { type AxiosError } from 'axios';
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     type IUseReactQueryMutationParams,
     type IUseReactQueryParams,
     type MutationMethodType,
 } from '@/types/api';
 import qs from 'query-string';
+import { IMAGE_API_URL } from '@/constants/api';
+import Cookies from 'js-cookie';
+import { ACCESS_TOKEN } from '@/constants/common';
 
 const MutationMethod = {
     delete: 'delete',
@@ -27,11 +30,13 @@ export const useReactQuery = (props: IUseReactQueryParams) => {
         AxiosError<{ details: string }>,
         any
     >(
-        [...uniqueKey,params],
+        [...uniqueKey, params],
         async () => {
-            const response = await axios.get( !!url && !!params
-                ? `${url}?${qs.stringify(params as Record<string, number>)}`
-                : url,);
+            const response = await axios.get(
+                !!url && !!params
+                    ? `${url}?${qs.stringify(params as Record<string, number>)}`
+                    : url,
+            );
             return response;
         },
         {
@@ -53,7 +58,7 @@ export const useReactQuery = (props: IUseReactQueryParams) => {
         handleRenderLater();
         // renderLater값 바뀌면 바로 리랜더링되면서 useQuery요청 부름
     }, [renderLater]);
- 
+
     return {
         data,
         error,
@@ -72,9 +77,9 @@ export const useReactQueryMutation =
             any,
             any
         >({
-            mutationFn: async (variables: any) => {
-                return await axios[method](url, variables);
-            },
+            mutationFn: async (variables: any, headers?: any) => {
+                return await axios[method](url, variables, { headers : headers});
+              },
             onSuccess,
             onError,
         });
@@ -87,3 +92,16 @@ export const useReactQueryMutation =
 export const useReactQueryDelete = useReactQueryMutation(MutationMethod.delete);
 export const useReactQueryPost = useReactQueryMutation(MutationMethod.post);
 export const useReactQueryPut = useReactQueryMutation(MutationMethod.put);
+
+export const fileUpload =async (formData :any): Promise<string[]> =>{
+    const headers = {
+        'Content-Type': 'multipart/form-data',
+    };
+    const data:{result : string[]} = await axios.post(
+       IMAGE_API_URL,
+        formData,
+        {headers,},
+    );
+
+    return  data.result ?? []
+}
