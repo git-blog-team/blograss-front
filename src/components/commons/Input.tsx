@@ -18,6 +18,7 @@ export default function Input({
     onClickReset,
     onClickSearch,
     isSearch,
+    maxLength,
     ...props
 }: IInputProps) {
     const inputId = id ?? useGenerateId({ prefix: '', postfix: '' });
@@ -34,6 +35,7 @@ export default function Input({
                     />
                 )}
                 <input
+                    maxLength={maxLength}
                     id={inputId}
                     type={inputType}
                     placeholder={placeholder}

@@ -1,6 +1,6 @@
 import { dateToYYMM01, dateToYYMMDD } from '@/utils/dateUtils';
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BsFillCalendarPlusFill } from 'react-icons/bs';
 import Calender from './calender';
 import CalenderHeader from './calenderHeader';
@@ -8,6 +8,7 @@ import CalenderNav from './calenderNav';
 import { type IDatePickerProps } from '@/types/interfaces/commons';
 import { normalRowStyles } from '@/styles/flexModules';
 import theme from '@/styles/theme';
+import dayjs from 'dayjs';
 
 export default function DatePicker({
     today,
@@ -18,8 +19,13 @@ export default function DatePicker({
      * 초기 선택 날짜는 date형식으로 넘어오기 때문에 YYMMDD 형식으로 변환
      * 그 이후에는 YYMMDD 형식으로 관리
      */
-    const [isSelectDay, setIsSelectDay] = useState(dateToYYMMDD(today));
-    const [isMonthFirstDay, setIsMonthFirstDay] = useState(dateToYYMM01(today));
+
+    const [isSelectDay, setIsSelectDay] = useState(
+        today ? dateToYYMMDD(today) : 'YYY-MM-DD',
+    );
+    const [isMonthFirstDay, setIsMonthFirstDay] = useState(
+        dateToYYMM01(today ?? dayjs().toDate()),
+    );
 
     const onClickCalenderIcon = () => {
         if (isOpenCalender) {
@@ -35,10 +41,15 @@ export default function DatePicker({
         }
         setIsOpenCalender(false);
     };
+    useEffect(() => {
+        if (isSelectDay === 'YYY-MM-DD' && !!today) {
+            setIsSelectDay(dateToYYMMDD(today));
+        }
+    }, [today]);
 
     return (
         <StyledWrapper>
-            <StyledWrapperDatePicker>
+            <StyledWrapperDatePicker isValue={isSelectDay !== 'YYY-MM-DD'}>
                 <input type="text" value={isSelectDay} readOnly />
                 <StyledCalenderIcon onClick={onClickCalenderIcon} />
             </StyledWrapperDatePicker>
@@ -71,8 +82,12 @@ const StyledCalenderIcon = styled(BsFillCalendarPlusFill)`
     cursor: pointer;
 `;
 
-const StyledWrapperDatePicker = styled.div`
+export const StyledWrapperDatePicker = styled.div<{ isValue: boolean }>`
     ${normalRowStyles()}
+    >input {
+        color: ${(props) =>
+            props.isValue ? 'black' : props.theme.colors.txt_gray};
+    }
 `;
 
 const StyledWrapperCalender = styled.div`

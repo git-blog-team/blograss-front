@@ -1,4 +1,5 @@
 export const BANNER_PAGE_URL = '/banner';
+export const BANNER_CREATE_PAGE_URL = '/banner/create';
 export const REPORT_PAGE_URL = '/report';
 export const NOTICE_PAGE_URL = '/notice';
 export const NOTICE_CREATE_PAGE_URL = '/notice/create';

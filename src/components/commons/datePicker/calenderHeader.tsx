@@ -28,8 +28,9 @@ const StyledCalenderHeader = styled.div`
     text-align: center;
     background-color: #fff;
     border: unset;
-
-    &:first-child {
+    &:first-of-type {
+        // ":first-child" is potentially unsafe when doing server-side rendering. Try changing it to ":first-of-type".
+        // 위 오류로 인해 선택자이름 변경
         color: red;
     }
 `;
