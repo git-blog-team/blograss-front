@@ -25,6 +25,7 @@ export default function Notice() {
             sortField: CREATED_AT,
             sortOrder: dropdownStates.sort.value,
             page: 1,
+            rowCount: 10,
         },
     });
 
