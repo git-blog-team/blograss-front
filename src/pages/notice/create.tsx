@@ -75,11 +75,11 @@ export default function CreateNotice() {
                         placeholder="타이틀을 작성해주세요"
                         value={title}
                     />
-                    <EditorWrite
+                    {/* <EditorWrite
                         type={'html'}
                         initialValue={dataContents}
                         onChange={onChangeEditorContent}
-                    />
+                    /> */}
                     <Button onClick={onClickSubmit} disabled={!editorContent}>
                         {isEdit ? '수정하기' : '등록하기'}
                     </Button>
