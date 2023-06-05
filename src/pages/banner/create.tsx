@@ -1,17 +1,13 @@
-import {
-    fileUpload,
-    useReactQuery,
-    useReactQueryPost,
-    useReactQueryPut,
-} from '@/api/http';
+import { useReactQuery, useReactQueryPost, useReactQueryPut } from '@/api/http';
 import Button, { StyledButton } from '@/components/commons/Button';
-import DropDown, { StyledDropdown } from '@/components/commons/DropDown';
+import DropDown from '@/components/commons/DropDown';
 import Input, { StyledWrapperInput } from '@/components/commons/Input';
 import Upload from '@/components/commons/Upload';
 import DatePicker, {
     StyledWrapperDatePicker,
 } from '@/components/commons/datePicker';
 import { BANNER_API_URL } from '@/constants/api';
+import { DEBOUNCE_OPTION, DEBOUNCE_TIME } from '@/constants/common';
 import { bannerTypeOptions } from '@/constants/optioins';
 
 import { BANNER_PAGE_URL } from '@/constants/utl';
@@ -23,6 +19,8 @@ import {
 } from '@/styles/flexModules';
 
 import styled from '@emotion/styled';
+import dayjs from 'dayjs';
+import _ from 'lodash';
 
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -39,10 +37,7 @@ export default function BannerCreate() {
     const [dates, setDates] = useState({ start: null, end: null });
     const [isValid, setIsValid] = useState(false);
     const [imageId, setImageId] = useState('');
-
-    const handleDates = (name: string, value: ValueType<any, any>) => {
-        setDates((state) => ({ ...state, [name]: value }));
-    };
+    const [endDateError, handleEndDateError] = useState('');
 
     const { mutation: createNotice } = useReactQueryPost({
         url: BANNER_API_URL,
@@ -60,33 +55,55 @@ export default function BannerCreate() {
     });
 
     const handleValid = () => {
-        const isValid = !!dates.end && !!dates.start && !!bannerName && imageId;
+        const endDateError = dayjs(dates.end).isBefore(dayjs(dates.start));
+        if (endDateError) {
+            handleEndDateError(
+                '배너종료일은 배너시작일보다 이전일수 없습니다.',
+            );
+        }
+
+        const isValid =
+            !!dates.end &&
+            !!dates.start &&
+            !!bannerName &&
+            imageId &&
+            !endDateError;
+
         setIsValid(isValid);
     };
 
-    const onClickSubmit = () => {
-        const mutation = isEdit ? editNotice : createNotice;
-
-        const variables = {
-            bannerName,
-            imageId: imageId,
-            startedAt: dates.start,
-            endedAt: dates.end,
-            bannerType: dropdownStates.bannerType.value,
-            ...(isEdit ? { bannerId } : {}),
-        };
-
-        mutation(variables, {
-            onSuccess: () => {
-                alert(`배너${isEdit ? '수정' : '등록'}되었습니다.`);
-                router.push(BANNER_PAGE_URL);
-            },
-        });
+    const handleDates = (name: string, value: ValueType<any, any>) => {
+        setDates((state) => ({ ...state, [name]: value }));
+        handleEndDateError('');
     };
 
     const handleImageId = (imageId: string) => {
         setImageId(imageId);
     };
+
+    const onClickSubmit = _.debounce(
+        () => {
+            const mutation = isEdit ? editNotice : createNotice;
+
+            const variables = {
+                bannerName,
+                imageId: imageId,
+                startedAt: dates.start,
+                endedAt: dates.end,
+                bannerType: dropdownStates.bannerType.value,
+                ...(isEdit ? { bannerId } : {}),
+            };
+
+            mutation(variables, {
+                onSuccess: () => {
+                    alert(`배너${isEdit ? '수정' : '등록'}되었습니다.`);
+                    router.push(BANNER_PAGE_URL);
+                },
+            });
+        },
+        DEBOUNCE_TIME,
+        DEBOUNCE_OPTION,
+    );
 
     useEffect(() => {
         if (!!data) {
@@ -118,7 +135,7 @@ export default function BannerCreate() {
                 <StyledContents>
                     <div>
                         <Input
-                            children={<p>배너이름</p>}
+                            children={'배너이름'}
                             onChange={(e) => setBannerName(e.target.value)}
                             placeholder="배너이름을 작성해주세요"
                             value={bannerName ?? ''}
@@ -159,6 +176,7 @@ export default function BannerCreate() {
                             }}
                             today={dates.end}
                         ></DatePicker>
+                        <p>{endDateError}</p>
                     </div>
                 </StyledContents>
                 <Button onClick={onClickSubmit} disabled={!isValid}>
@@ -189,7 +207,6 @@ const StyledCreateNotice = styled.div`
 `;
 const StyledTopContents = styled.div`
     width: 100%;
-    padding: 0 0 0 50px;
 `;
 const StyledContents = styled.div`
     ${ColumnFlexStartFlexStart};
@@ -203,6 +220,20 @@ const StyledContents = styled.div`
             height: fit-content;
             margin: 0 10px 0 0;
             line-height: 40px;
+            position: relative;
+            ::after {
+                content: '✓ 필수';
+                position: absolute;
+                left: 0;
+                top: 15px;
+                font-size: 12px;
+                color: ${(props) => props.theme.colors.point_orange};
+            }
+        }
+        > p {
+            color: red;
+            margin: 20px 0 0 11px;
+            font-size: 12px;
         }
         ${StyledWrapperInput} {
             border-radius: 5px;

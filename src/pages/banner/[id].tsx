@@ -1,12 +1,17 @@
 import { useReactQuery, useReactQueryDelete } from '@/api/http';
 import Button, { StyledButton } from '@/components/commons/Button';
 import { BANNER_API_URL } from '@/constants/api';
-import { IMAGE_BASE_URL } from '@/constants/common';
+import {
+    DEBOUNCE_OPTION,
+    DEBOUNCE_TIME,
+    IMAGE_BASE_URL,
+} from '@/constants/common';
 import { BANNER_CREATE_PAGE_URL, BANNER_PAGE_URL } from '@/constants/utl';
 import { StyledCommonMenuTitle, StyledCommonWrapper } from '@/styles/commons';
 import { normalRowStyles } from '@/styles/flexModules';
 import { dateToYYMMDD } from '@/utils/dateUtils';
 import styled from '@emotion/styled';
+import _ from 'lodash';
 import { useRouter } from 'next/router';
 
 export default function BannerDetail() {
@@ -41,22 +46,27 @@ export default function BannerDetail() {
         });
     };
 
-    const onClickDelete = () => {
-        deleteNotice(
-            {
-                data: {
-                    bannerIds: [bannerId],
+    const onClickDelete = _.debounce(
+        () => {
+            deleteNotice(
+                {
+                    data: {
+                        bannerIds: [bannerId],
+                    },
                 },
-            },
-            {
-                onSuccess: () => {
-                    alert('배너가 삭제되었습니다.');
-                    router.push(BANNER_PAGE_URL);
+                {
+                    onSuccess: () => {
+                        alert('배너가 삭제되었습니다.');
+                        router.push(BANNER_PAGE_URL);
+                    },
+                    onError: (err) => console.log(err),
                 },
-                onError: (err) => console.log(err),
-            },
-        );
-    };
+            );
+        },
+        DEBOUNCE_TIME,
+        DEBOUNCE_OPTION,
+    );
+
     return (
         <StyledBannerDetail>
             <StyledCommonWrapper>

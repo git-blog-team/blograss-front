@@ -66,6 +66,7 @@ export default function Banner() {
                         <Input
                             onChange={onChangeKeyword}
                             height="38px"
+                            placeholder="검색어를 입력하세요."
                             isSearch={true}
                         />
                         <Link href={BANNER_CREATE_PAGE_URL}>
@@ -138,6 +139,11 @@ const StyledTopContents = styled.div`
         ${StyledWrapperInput} {
             width: 250px;
             border-radius: 5px;
+            input {
+                ::placeholder {
+                    font-size: 12px;
+                }
+            }
         }
     }
 `;
@@ -147,13 +153,13 @@ const StyledLink = styled.p`
     height: 40px;
     text-align: center;
     line-height: 40px;
+    background-color: ${(props) => props.theme.colors.point_green};
     border: 1px solid ${(props) => props.theme.colors.line_default};
     margin: 0 0 0 10px;
     border-radius: 5px;
     font-size: 12px;
-    color: black;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 1px;
     cursor: pointer;
-    :hover {
-        border: 1px solid ${(props) => props.theme.colors.point_orange};
-    }
 `;

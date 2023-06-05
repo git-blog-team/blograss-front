@@ -21,6 +21,17 @@ export default function Upload({
     const imgUpload = async (event: ChangeEvent<HTMLInputElement>) => {
         const target = event?.target as HTMLInputElement;
         const file: FileList = target?.files as FileList;
+        const isOverSized = file[0]?.size > 10 * 1024 * 1024;
+        const isValidFileType = file[0]?.type.startsWith('image/');
+        if (!isValidFileType) {
+            alert('이미지 파일만 업로드하세요.');
+            return;
+        }
+        if (isOverSized) {
+            alert('10MB 이하의 파일로 업로드하세요.');
+            return;
+        }
+
         if (!!file) {
             const reader = new FileReader();
             reader.readAsDataURL(file[0]);
