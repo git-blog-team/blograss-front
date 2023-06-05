@@ -39,6 +39,7 @@ export default function Banner() {
             sortField: dropdownStates.sort.value.sortField ?? CREATED_AT,
             sortOrder: dropdownStates.sort.value.value ?? DESC,
             page: 1,
+            rowCount: 10,
         },
     });
     const onChangeKeyword = _.debounce((e: ChangeEvent<HTMLInputElement>) => {
