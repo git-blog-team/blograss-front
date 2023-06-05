@@ -5,7 +5,6 @@ import { type EditorOptions } from '@/types/interfaces/commons';
 
 import { HookCallback } from '@toast-ui/editor/types/editor';
 import axios from '../../api/middlewares';
-import { AxiosResponse } from 'axios';
 
 export default function EditorWrite(options: EditorOptions) {
     const { height = '400px', type, initialValue = ' ', onChange } = options;

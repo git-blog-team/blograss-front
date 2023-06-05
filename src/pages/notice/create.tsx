@@ -1,6 +1,5 @@
 import { useReactQuery, useReactQueryPost, useReactQueryPut } from '@/api/http';
 import Button, { StyledButton } from '@/components/commons/Button';
-import EditorWrite from '@/components/commons/EditorWrite';
 import Input, { StyledWrapperInput } from '@/components/commons/Input';
 import { NOTICE_API_URL } from '@/constants/api';
 import { DEBOUNCE_OPTION, DEBOUNCE_TIME } from '@/constants/common';
@@ -12,6 +11,12 @@ import styled from '@emotion/styled';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+
+const EditorWrite = dynamic(
+    async () => await import('@/components/commons/EditorWrite'),
+    { ssr: false },
+);
 
 export default function CreateNotice() {
     const router = useRouter();
@@ -73,13 +78,32 @@ export default function CreateNotice() {
                     <Input
                         onChange={(e) => setTitle(e.target.value)}
                         placeholder="타이틀을 작성해주세요"
-                        value={title}
+                        /* 
+                        👇 title => title || '' 
+                        client.js:1 Warning: A component is changing a controlled input to be uncontrolled.
+                        This is likely caused by the value changing from a defined to undefined, which should not happen.
+                        Decide between using a controlled or uncontrolled input element for the lifetime of the component.
+                        */
+                        value={title || ''}
                     />
-                    {/* <EditorWrite
-                        type={'html'}
-                        initialValue={dataContents}
-                        onChange={onChangeEditorContent}
-                    /> */}
+                    {/* 삼항연산자를 사용하면 최초 렌더링 시, contents가 undefined이기 때문에,
+                    빈값인 작성하기 경우의 에디터로 렌더링 되는 문제가 있어 다음과 같이 함. */}
+                    {dataContents !== undefined && (
+                        <EditorWrite
+                            type={'markdown'}
+                            // 받는 데이터의 타입이 html아닌, markdown형식의 글 내용이여야 함
+                            initialValue={dataContents || ' '}
+                            onChange={onChangeEditorContent}
+                        />
+                    )}
+                    {dataContents == undefined && (
+                        <EditorWrite
+                            type={'markdown'}
+                            // 받는 데이터의 타입이 html아닌, markdown형식의 글 내용이여야 함
+                            initialValue={dataContents || ' '}
+                            onChange={onChangeEditorContent}
+                        />
+                    )}
                     <Button onClick={onClickSubmit} disabled={!editorContent}>
                         {isEdit ? '수정하기' : '등록하기'}
                     </Button>
