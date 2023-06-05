@@ -96,8 +96,8 @@ export default function Banner() {
                                 </td>
                                 <td>{item.bannerType}</td>
                                 <td>{dateToYYMMDD(item.createdAt)}</td>
-                                <td>{dateToYYMMDD(item.endedAt)}</td>
                                 <td>{dateToYYMMDD(item.startedAt)}</td>
+                                <td>{dateToYYMMDD(item.endedAt)}</td>
                             </tr>
                         ))}
                     </>
