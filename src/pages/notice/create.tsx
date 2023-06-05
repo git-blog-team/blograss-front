@@ -3,11 +3,13 @@ import Button, { StyledButton } from '@/components/commons/Button';
 import EditorWrite from '@/components/commons/EditorWrite';
 import Input, { StyledWrapperInput } from '@/components/commons/Input';
 import { NOTICE_API_URL } from '@/constants/api';
+import { DEBOUNCE_OPTION, DEBOUNCE_TIME } from '@/constants/common';
 import { NOTICE_PAGE_URL } from '@/constants/utl';
 import { useEditor } from '@/hooks/commons';
 import { StyledCommonMenuTitle, StyledCommonWrapper } from '@/styles/commons';
 import { centerColumnStyles } from '@/styles/flexModules';
 import styled from '@emotion/styled';
+import _ from 'lodash';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -33,23 +35,27 @@ export default function CreateNotice() {
         },
     });
 
-    const onClickSubmit = () => {
-        const mutation = isEdit ? editNotice : createNotice;
+    const onClickSubmit = _.debounce(
+        () => {
+            const mutation = isEdit ? editNotice : createNotice;
 
-        const variables = {
-            title,
-            content: editorContent,
-            imageIds: [],
-            ...(isEdit ? { noticeId } : {}),
-        };
+            const variables = {
+                title,
+                content: editorContent,
+                imageIds: [],
+                ...(isEdit ? { noticeId } : {}),
+            };
 
-        mutation(variables, {
-            onSuccess: () => {
-                alert(`공지사항이 ${isEdit ? '수정' : '등록'}되었습니다.`);
-                router.push(NOTICE_PAGE_URL);
-            },
-        });
-    };
+            mutation(variables, {
+                onSuccess: () => {
+                    alert(`공지사항이 ${isEdit ? '수정' : '등록'}되었습니다.`);
+                    router.push(NOTICE_PAGE_URL);
+                },
+            });
+        },
+        DEBOUNCE_TIME,
+        DEBOUNCE_OPTION,
+    );
 
     useEffect(() => {
         const { title, content } = data?.result?.[0] ?? '';

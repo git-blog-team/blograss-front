@@ -11,7 +11,7 @@ export default function DropDown(props: IDropDownProps) {
         isDisabled,
         name,
         options,
-        value,
+        value = undefined,
         onChange,
         direction = 'bottom',
     } = props;
@@ -73,7 +73,9 @@ export const StyledDropdown = styled.div`
             box-shadow: 0 0 0 1px ${(props) => props.theme.colors.point_orange};
         }
     }
-
+    .react-select__single-value {
+        padding: 2px 0 0 0;
+    }
     div.react-select__indicators {
         height: 35px;
         svg {

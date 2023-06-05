@@ -1,5 +1,6 @@
 import { type INaviMenuItem } from '@/types/interfaces/commons';
 import { BANNER_PAGE_URL, NOTICE_PAGE_URL, REPORT_PAGE_URL } from './utl';
+import { ASC, CREATED_AT, DESC, ENDED_AT, STARTED_AT } from './common';
 
 export const noticeListDropdownOptions = [
     { label: '공지생성일', value: 'CreatedAt' },
@@ -40,3 +41,31 @@ export const navigationMenu: INaviMenuItem[] = [
 ];
 
 export const daysText = ['일', '월', '화', '수', '목', '금', '토'];
+
+export const bannerTypeOptions= [
+    { label: 'Big Banner', value: 'Big Banner' },
+    { label: 'Top Banner', value: 'Top Banner' },
+    {
+        label: 'Mobile Banner',
+        value: 'Mobile Banner',
+    },
+]
+
+export const bannerTypeFilterOptions =[
+    { label: '배너타입 전체', value: '' },
+    { label: 'Big Banner', value: 'Big Banner' },
+    { label: 'Top Banner', value: 'Top Banner' },
+    {
+        label: 'Mobile Banner',
+        value: 'Mobile Banner',
+    },
+]
+
+export const bannerSortOptions=[
+    { label: '생성일순 : 내림차순',value:{ sortField: CREATED_AT, value: DESC }},
+    { label: '생성일순 : 오름차순',value:{sortField: CREATED_AT, value: ASC }},
+    { label: '시작일순 : 내림차순',value:{ sortField: STARTED_AT, value: DESC}},
+    { label: '시작일순 : 오름차순',value:{ sortField: STARTED_AT, value: ASC }},
+    { label: '종료일순 : 내림차순', value:{sortField: ENDED_AT, value: DESC }},
+    { label: '종료일순 : 오름차순', value:{sortField: ENDED_AT, value: ASC} },
+]

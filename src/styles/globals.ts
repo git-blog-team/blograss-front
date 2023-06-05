@@ -12,7 +12,10 @@ export const globalStyles = (props: CustomThemeType) => css`
     *::before {
         box-sizing: border-box;
     }
-
+    a {
+        text-decoration: none;  
+    }
+    
     label {
         font-size: 24px;
         line-height: 36px;

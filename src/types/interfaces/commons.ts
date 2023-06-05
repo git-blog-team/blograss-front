@@ -110,6 +110,7 @@ export interface IInputProps extends IStyledInputProps {
     onClickReset?: () => void;
     onClickSearch?: () => void;
     isSearch?: boolean;
+    maxLength?: number;
 }
 
 export interface IUseGenerateId {
@@ -118,7 +119,7 @@ export interface IUseGenerateId {
 }
 
 export interface IDatePickerProps {
-    today: Date;
+    today: Date | null;
     handlingPickDate?: (pickDate: string) => void;
 }
 
