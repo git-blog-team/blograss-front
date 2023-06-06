@@ -4,9 +4,9 @@ import {
     type IStyledLinkItemProps,
 } from '@/types/interfaces/commons';
 import styled from '@emotion/styled';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import theme from '@/styles/theme';
+import { useRouter } from 'next/router';
 
 const StyledWrapperColumn = styled.div`
     ${centerColumnStyles()}
@@ -16,7 +16,7 @@ const StyledWrapperRow = styled.div`
     ${centerRowStyles()}
 `;
 
-const StyledLinkItem = styled(Link)<IStyledLinkItemProps>`
+const StyledLinkItem = styled.span<IStyledLinkItemProps>`
     font-size: 14px;
     margin: 0px 5px 0px 5px;
     color: ${(props) =>
@@ -51,6 +51,12 @@ export default function Pagination({
             ? totalPages
             : startPage + pagesPerBlock;
 
+    const router = useRouter();
+
+    const routePages = (url: string) => {
+        router.push(url);
+    };
+
     useEffect(() => {
         const blockArray = new Array(pagesPerBlock)
             .fill(startPage)
@@ -62,23 +68,31 @@ export default function Pagination({
     return (
         <StyledWrapperColumn>
             <StyledWrapperRow>
-                <StyledLinkItem href={`${pageUrl}/1`}>처음</StyledLinkItem>
-                <StyledLinkItem href={`${pageUrl}/${prevBlock}`}>
+                <StyledLinkItem onClick={() => routePages(`${pageUrl}/1`)}>
+                    처음
+                </StyledLinkItem>
+                <StyledLinkItem
+                    onClick={() => routePages(`${pageUrl}/${prevBlock}`)}
+                >
                     이전
                 </StyledLinkItem>
                 {isBlockArray.map((item) => (
                     <StyledLinkItem
                         key={item}
-                        href={`${pageUrl}/${item}`}
+                        onClick={() => routePages(`${pageUrl}/${item}`)}
                         iscurrentpage={currentPage === item ? 'true' : 'false'}
                     >
                         {item}
                     </StyledLinkItem>
                 ))}
-                <StyledLinkItem href={`${pageUrl}/${nextBlock}`}>
+                <StyledLinkItem
+                    onClick={() => routePages(`${pageUrl}/${nextBlock}`)}
+                >
                     다음
                 </StyledLinkItem>
-                <StyledLinkItem href={`${pageUrl}/${totalPages}`}>
+                <StyledLinkItem
+                    onClick={() => routePages(`${pageUrl}/${totalPages}`)}
+                >
                     끝
                 </StyledLinkItem>
             </StyledWrapperRow>

@@ -1,5 +1,6 @@
 import { useReactQuery } from '@/api/http';
 import DropDown from '@/components/commons/DropDown';
+import Pagination from '@/components/commons/Pagination';
 import CommonTable from '@/components/commons/Table';
 import { NOTICE_LIST_API_URL } from '@/constants/api';
 import { ASC, CREATED_AT, DESC } from '@/constants/common';
@@ -71,6 +72,15 @@ export default function Notice() {
                         ))}
                     </>
                 </CommonTable>
+                {data?.count && (
+                    <Pagination
+                        totalItems={data.count}
+                        itemsPerPage={10}
+                        pagesPerBlock={10}
+                        currentPage={1}
+                        pageUrl="/notice"
+                    />
+                )}
             </StyledCommonWrapper>
         </StyledNotice>
     );
