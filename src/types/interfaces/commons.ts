@@ -53,7 +53,6 @@ export interface IPaginationProps {
     itemsPerPage: number;
     pagesPerBlock: number;
     currentPage: number;
-    pageUrl: string;
 }
 
 export interface IStyledLinkItemProps {

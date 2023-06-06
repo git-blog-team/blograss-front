@@ -36,8 +36,8 @@ export default function Pagination({
     itemsPerPage,
     pagesPerBlock,
     currentPage,
-    pageUrl,
-}: IPaginationProps) {
+}: //     pageUrl, 사용단에서 router.query.page 를 사용하면 될것같습니당
+IPaginationProps) {
     const [isBlockArray, setIsBlockArray] = useState<number[]>([]);
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     const startPage =
@@ -53,8 +53,10 @@ export default function Pagination({
 
     const router = useRouter();
 
-    const routePages = (url: string) => {
-        router.push(url);
+    const routePages = (page: number) => {
+        //      router.push(url); 리스트에서 이렇게 보내니까 디테일페이지로 가버리는 이슈가 있어서
+        // 아래와 같은 방식을 건의드립니답
+        router.push({ pathname: router.pathname, query: { page } });
     };
 
     useEffect(() => {
@@ -68,31 +70,25 @@ export default function Pagination({
     return (
         <StyledWrapperColumn>
             <StyledWrapperRow>
-                <StyledLinkItem onClick={() => routePages(`${pageUrl}/1`)}>
+                <StyledLinkItem onClick={() => routePages(1)}>
                     처음
                 </StyledLinkItem>
-                <StyledLinkItem
-                    onClick={() => routePages(`${pageUrl}/${prevBlock}`)}
-                >
+                <StyledLinkItem onClick={() => routePages(prevBlock)}>
                     이전
                 </StyledLinkItem>
                 {isBlockArray.map((item) => (
                     <StyledLinkItem
                         key={item}
-                        onClick={() => routePages(`${pageUrl}/${item}`)}
+                        onClick={() => routePages(item)}
                         iscurrentpage={currentPage === item ? 'true' : 'false'}
                     >
                         {item}
                     </StyledLinkItem>
                 ))}
-                <StyledLinkItem
-                    onClick={() => routePages(`${pageUrl}/${nextBlock}`)}
-                >
+                <StyledLinkItem onClick={() => routePages(nextBlock)}>
                     다음
                 </StyledLinkItem>
-                <StyledLinkItem
-                    onClick={() => routePages(`${pageUrl}/${totalPages}`)}
-                >
+                <StyledLinkItem onClick={() => routePages(totalPages)}>
                     끝
                 </StyledLinkItem>
             </StyledWrapperRow>

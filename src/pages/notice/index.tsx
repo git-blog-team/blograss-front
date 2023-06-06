@@ -14,18 +14,22 @@ import { dateToYYMMDD } from '@/utils/dateUtils';
 import styled from '@emotion/styled';
 import _ from 'lodash';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function Notice() {
     const [dropdownStates, handleDropdowns] = useDropdowns({
         sort: { label: '최신순', value: DESC },
     });
+
+    const router = useRouter();
+    const { page } = router.query;
     const { data, isLoading } = useReactQuery({
         url: NOTICE_LIST_API_URL,
         params: {
             search: null,
             sortField: CREATED_AT,
             sortOrder: dropdownStates.sort.value,
-            page: 1,
+            page: page ?? 1,
             rowCount: 10,
         },
     });
@@ -78,7 +82,6 @@ export default function Notice() {
                         itemsPerPage={10}
                         pagesPerBlock={10}
                         currentPage={1}
-                        pageUrl="/notice"
                     />
                 )}
             </StyledCommonWrapper>
@@ -86,7 +89,7 @@ export default function Notice() {
     );
 }
 const StyledNotice = styled.div`
-    > div > div:last-of-type {
+    > div > div:nth-of-type(2) {
         height: 600px;
         width: 100%;
         tbody > tr > td {

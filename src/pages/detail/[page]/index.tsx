@@ -13,7 +13,6 @@ export default function DetailPage() {
                 itemsPerPage={10}
                 pagesPerBlock={5}
                 currentPage={Number(page)}
-                pageUrl="/detail"
             />
         </div>
     );
