@@ -81,7 +81,7 @@ export default function Notice() {
                         totalItems={data.count}
                         itemsPerPage={10}
                         pagesPerBlock={10}
-                        currentPage={1}
+                        currentPage={Number(page)}
                     />
                 )}
             </StyledCommonWrapper>

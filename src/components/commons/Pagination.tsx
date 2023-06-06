@@ -25,6 +25,7 @@ const StyledLinkItem = styled.span<IStyledLinkItemProps>`
             : theme.colors.point_green};
     font-weight: ${(props) =>
         props.iscurrentpage === 'true' ? 'bold' : 'normal'};
+    cursor: pointer;
     :hover {
         color: ${(props) => theme.colors.point_green2};
         font-weight: bold;
