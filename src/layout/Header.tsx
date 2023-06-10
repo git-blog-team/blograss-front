@@ -14,11 +14,12 @@ interface IHeaderReduxState {
         adminInfo: {
             adminName: string;
         };
+        isLogin: boolean;
     };
 }
 
 export default function Header() {
-    const { adminInfo, accessToken } = useSelector(
+    const { adminInfo, isLogin } = useSelector(
         (state: IHeaderReduxState) => state.user,
     );
 
@@ -54,7 +55,7 @@ export default function Header() {
                     </p>
                 </a>
                 <div>
-                    {accessToken ? (
+                    {isLogin ? (
                         <>
                             {adminInfo?.adminName}님 🥬
                             <button onClick={onClickLogOut}>로그아웃</button>

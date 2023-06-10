@@ -1,11 +1,11 @@
-
-import { type RefObject, useState,useId } from 'react';
+import { type RefObject, useState, useId } from 'react';
 import { type Editor } from '@toast-ui/react-editor';
 import {
     type IUseGenerateId,
     type ValueTypeObject,
 } from '@/types/interfaces/commons';
 import { type ValueType } from 'react-select';
+import { useDispatch } from 'react-redux';
 
 export const useDropdowns = (initialvalue: ValueTypeObject) => {
     const [state, setState] = useState(initialvalue);
@@ -45,13 +45,19 @@ export const useEditor = (initialValue: string) => {
         }
     };
 
-    return [editorContent, onChangeEditorContent] as const;}
+    return [editorContent, onChangeEditorContent] as const;
+};
 
-    export const useGenerateId = ({
-        prefix = '',
-        postfix = '',
-    }: IUseGenerateId) => {
-        const prefixString = prefix !== '' ? `${prefix}-` : '';
-        const postfixString = postfix !== '' ? `-${postfix}` : '';
-        return `${prefixString}${useId()}${postfixString}`;
-    };
+export const useGenerateId = ({
+    prefix = '',
+    postfix = '',
+}: IUseGenerateId) => {
+    const prefixString = prefix !== '' ? `${prefix}-` : '';
+    const postfixString = postfix !== '' ? `-${postfix}` : '';
+    return `${prefixString}${useId()}${postfixString}`;
+};
+
+export const useAuthUpdate = ({ data }: any) => {
+    console.log(data);
+    const dispatch = useDispatch();
+};

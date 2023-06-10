@@ -1,11 +1,10 @@
-import { ACCESS_TOKEN } from '@/constants/common';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/common';
 import Axios from 'axios';
-
 import Cookies from 'js-cookie';
 
 const axios = Axios.create({
     baseURL: 'https://api.blograss.com',
-    timeout: 1000,
+    timeout: 10000,
 });
 
 axios.interceptors.request.use(
@@ -15,8 +14,7 @@ axios.interceptors.request.use(
     (conf) => {
         conf.headers = conf.headers ?? {};
         const accessToken = Cookies.get(ACCESS_TOKEN);
-        const refreshToken = Cookies.get('refreshToken');
-        // 로컬스토리지에서 token 가져옴
+        const refreshToken = Cookies.get(REFRESH_TOKEN);
         // conf.headers['Content-Type'] = 'application/json; charset=utf-8';
         // 이미지는 json 아니에요~
         // 서버에게 json 형식을 사용할거라고 알려줌
@@ -41,11 +39,19 @@ axios.interceptors.response.use(
     // response 시 사용될것들
     // 첫번째인자 : response 진행시, 두번째인자 : response 실패시
     (res) => {
+        if (
+            res.request.responseURL ===
+            'https://api.blograss.com/admin/reissue?'
+        ) {
+            Cookies.set(ACCESS_TOKEN, res.data.result[0].accessToken, {
+                expires: 7,
+                secure: true,
+            });
+        }
         return res.data;
     },
     async (error) => {
         // 토큰만료관련 작성될 로직 여기
-
         await Promise.reject(error);
     },
 );
