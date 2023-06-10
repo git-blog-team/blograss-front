@@ -1,14 +1,5 @@
+import { IUserInitialState } from '@/types/interfaces/commons';
 import { createSlice } from '@reduxjs/toolkit';
-
-export interface IUserInitialState {
-    accessToken?: string;
-    refreshToken?: string;
-    isLogin?: boolean;
-    adminInfo?: {
-        adminId: string;
-        adminName: string;
-    };
-}
 
 const initialState: IUserInitialState = {
     accessToken: '',
@@ -25,16 +16,22 @@ export const userDataSlice = createSlice({
     initialState,
     reducers: {
         updateUserData: (state, action) => {
-            console.log(action.payload);
             state = {
                 ...state,
                 ...action.payload,
             };
             return state;
         },
+        initUserData: (state) => {
+            state = {
+                ...state,
+                ...initialState,
+            };
+            return state;
+        },
     },
 });
 
-export const { updateUserData } = userDataSlice.actions;
+export const { updateUserData, initUserData } = userDataSlice.actions;
 
 export default userDataSlice.reducer;

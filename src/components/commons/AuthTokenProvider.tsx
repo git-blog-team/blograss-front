@@ -13,7 +13,7 @@ export default function AuthTokenProvider({
 }) {
     const dispatch = useDispatch();
     const router = useRouter();
-    const { data, error } = useReactQuery({
+    const { data } = useReactQuery({
         url: AUTH_TOKEN_REISSUE_API_URL,
         params: {},
         onError: (error: any) => {
