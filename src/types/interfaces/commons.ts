@@ -137,6 +137,16 @@ export interface ICalenderNavProps {
     setIsMonthFirstDay: (changeMonth: string) => void;
 }
 
+export type statusColorType = {
+    status: string;
+    theme: {
+        colors: {
+            point_orange: string;
+            point_green: string;
+        };
+    };
+};
+
 export interface IUserInitialState {
     accessToken?: string;
     refreshToken?: string;
@@ -156,3 +166,4 @@ export interface IHeaderReduxState {
         isLogin: boolean;
     };
 }
+
