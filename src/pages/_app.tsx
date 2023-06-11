@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'; // reduximport { store } from '@/store/s
 import { store } from '@/store/store';
 import theme from '@/styles/theme';
 import Layout from '@/layout/Layout';
+import AuthTokenProvider from '@/components/commons/AuthTokenProvider';
 
 export default function App({ Component, pageProps }: AppProps) {
     const queryClient = new QueryClient({
@@ -22,11 +23,13 @@ export default function App({ Component, pageProps }: AppProps) {
         <ThemeProvider theme={theme}>
             <Provider store={store}>
                 <QueryClientProvider client={queryClient}>
-                    <Global styles={globalStyles} />
-                    <Layout>
-                        <Component {...pageProps} />
-                    </Layout>
-                    <ReactQueryDevtools position={'bottom-right'} />
+                    <AuthTokenProvider>
+                        <Global styles={globalStyles} />
+                        <Layout>
+                            <Component {...pageProps} />
+                        </Layout>
+                        <ReactQueryDevtools position={'bottom-right'} />
+                    </AuthTokenProvider>
                 </QueryClientProvider>
             </Provider>
         </ThemeProvider>
