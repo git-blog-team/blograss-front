@@ -136,3 +136,13 @@ export interface ICalenderNavProps {
     isMonthFirstDay: string;
     setIsMonthFirstDay: (changeMonth: string) => void;
 }
+
+export type statusColorType = {
+    status: string;
+    theme: {
+        colors: {
+            point_orange: string;
+            point_green: string;
+        };
+    };
+};
