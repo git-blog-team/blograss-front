@@ -56,8 +56,3 @@ export const useGenerateId = ({
     const postfixString = postfix !== '' ? `-${postfix}` : '';
     return `${prefixString}${useId()}${postfixString}`;
 };
-
-export const useAuthUpdate = ({ data }: any) => {
-    console.log(data);
-    const dispatch = useDispatch();
-};
