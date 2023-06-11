@@ -73,7 +73,9 @@ export default function Login() {
                         expires: 7,
                         secure: true,
                     });
-                    dispatch(updateUserData(res.result[0]));
+                    dispatch(
+                        updateUserData({ ...res.result[0], isLogin: true }),
+                    );
                     router.push('/');
                 },
                 onError: (error) => {

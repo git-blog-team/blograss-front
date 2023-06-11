@@ -1,30 +1,25 @@
 import { useReactQueryDelete } from '@/api/http';
 import { LOGIN_PAGE_URL } from '@/constants/utl';
+import { initUserData } from '@/store/userSlice';
 import { centerRowStyles, spaceBetweenRowStyles } from '@/styles/flexModules';
+import { IHeaderReduxState } from '@/types/interfaces/commons';
 import styled from '@emotion/styled';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
-
-interface IHeaderReduxState {
-    user: {
-        accessToken: string;
-        adminInfo: {
-            adminName: string;
-        };
-    };
-}
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Header() {
-    const { adminInfo, accessToken } = useSelector(
+    const { adminInfo, isLogin } = useSelector(
         (state: IHeaderReduxState) => state.user,
     );
+    const dispatch = useDispatch();
 
     const { mutation: logoutMutation, isLoading } = useReactQueryDelete({
         url: '/admin/logout',
         onSuccess: () => {
+            dispatch(initUserData());
             router.push(LOGIN_PAGE_URL);
         },
     });
@@ -54,7 +49,7 @@ export default function Header() {
                     </p>
                 </a>
                 <div>
-                    {accessToken ? (
+                    {isLogin ? (
                         <>
                             {adminInfo?.adminName}님 🥬
                             <button onClick={onClickLogOut}>로그아웃</button>
