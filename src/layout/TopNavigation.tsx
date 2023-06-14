@@ -9,24 +9,28 @@ import { useRouter } from 'next/router';
 
 export default function TopNavigation() {
     const router = useRouter();
-
-    const url = router.asPath;
-
     return (
         <StyledTopNavigation>
             <ul>
-                <StyledNavItem isSelected={url === MAIN_PAGE_URL}>
-                    <Link href={MAIN_PAGE_URL}>MAIN</Link>
-                </StyledNavItem>
-                {_.map(navigationMenu, (item: INaviMenuItem) => {
-                    const isSelected = url.startsWith(item.path);
-
-                    return (
-                        <StyledNavItem key={item.id} isSelected={isSelected}>
-                            <Link href={item.path}>{item.name}</Link>
+                <Link href={MAIN_PAGE_URL}>
+                    <StyledNavItem
+                        isSelected={router.pathname === MAIN_PAGE_URL}
+                    >
+                        MAIN
+                    </StyledNavItem>
+                </Link>
+                {_.map(navigationMenu, (item: INaviMenuItem) => (
+                    <Link href={item.path} key={item.id}>
+                        <StyledNavItem
+                            isSelected={
+                                router.pathname !== MAIN_PAGE_URL &&
+                                item.path.includes(router.pathname)
+                            }
+                        >
+                            {item.name}
                         </StyledNavItem>
-                    );
-                })}
+                    </Link>
+                ))}
             </ul>
         </StyledTopNavigation>
     );
@@ -55,16 +59,14 @@ const StyledNavItem = styled.li<{ isSelected?: boolean }>`
     font-weight: 900;
     line-height: 42px;
     text-align: center;
+    text-decoration-line: none;
+    text-decoration: none;
+    color: ${(props) =>
+        props.isSelected ?? false
+            ? props.theme.colors.point_orange
+            : props.theme.colors.point_yellow_green2};
 
     cursor: pointer;
-    > a {
-        text-decoration-line: none;
-        text-decoration: none;
-        color: ${(props) =>
-            props.isSelected ?? false
-                ? props.theme.colors.point_orange
-                : props.theme.colors.point_yellow_green2};
-    }
 
     :hover {
         box-shadow: 0px 0px 5px #c1cfc1;
