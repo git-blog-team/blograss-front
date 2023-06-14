@@ -19,7 +19,6 @@ import {
 } from '@/styles/flexModules';
 
 import styled from '@emotion/styled';
-import dayjs from 'dayjs';
 import _ from 'lodash';
 
 import { useRouter } from 'next/router';
@@ -53,24 +52,6 @@ export default function BannerCreate() {
             bannerId,
         },
     });
-
-    const handleValid = () => {
-        const endDateError = dayjs(dates.end).isBefore(dayjs(dates.start));
-        if (endDateError) {
-            handleEndDateError(
-                '배너종료일은 배너시작일보다 이전일수 없습니다.',
-            );
-        }
-
-        const isValid =
-            !!dates.end &&
-            !!dates.start &&
-            !!bannerName &&
-            imageId &&
-            !endDateError;
-
-        setIsValid(isValid);
-    };
 
     const handleDates = (name: string, value: ValueType<any, any>) => {
         setDates((state) => ({ ...state, [name]: value }));
@@ -119,10 +100,6 @@ export default function BannerCreate() {
             handleImageId(imageId);
         }
     }, [data]);
-
-    useEffect(() => {
-        handleValid();
-    }, [dates, bannerName, imageId]);
 
     return (
         <StyledCreateNotice>
@@ -175,6 +152,7 @@ export default function BannerCreate() {
                                 handleDates('end', pickDate);
                             }}
                             today={dates.end}
+                            minimumDate={dates.start}
                         ></DatePicker>
                         <p>{endDateError}</p>
                     </div>

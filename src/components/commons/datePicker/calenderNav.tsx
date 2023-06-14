@@ -1,10 +1,12 @@
 import { type ICalenderNavProps } from '@/types/interfaces/commons';
-import { YYMMDDToYYMM, dateToYYMM01 } from '@/utils/dateUtils';
+import { YYMMDDToYYMM, dateToYYMM01, isBetweenDate } from '@/utils/dateUtils';
 import styled from '@emotion/styled';
 
 export default function CalenderNav({
     isMonthFirstDay,
     setIsMonthFirstDay,
+    minimumDate,
+    maximumDate,
 }: ICalenderNavProps) {
     const handleCalenderMonth = (type: string) => {
         const date = new Date(isMonthFirstDay);
@@ -16,7 +18,11 @@ export default function CalenderNav({
                 date.setMonth(date.getMonth() + 1);
                 break;
         }
-        setIsMonthFirstDay(dateToYYMM01(date));
+        if (isBetweenDate(date, minimumDate, maximumDate)) {
+            setIsMonthFirstDay(dateToYYMM01(date));
+        } else {
+            alert('범위를 벗어난 날짜입니다.');
+        }
     };
 
     return (
