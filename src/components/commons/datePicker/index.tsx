@@ -13,6 +13,8 @@ import dayjs from 'dayjs';
 export default function DatePicker({
     today,
     handlingPickDate,
+    minimumDate = new Date('2000-01-01'),
+    maximumDate = new Date('2100-12-31'),
 }: IDatePickerProps) {
     const [isOpenCalender, setIsOpenCalender] = useState(false);
     /**
@@ -58,6 +60,8 @@ export default function DatePicker({
                     <CalenderNav
                         isMonthFirstDay={isMonthFirstDay}
                         setIsMonthFirstDay={setIsMonthFirstDay}
+                        minimumDate={minimumDate}
+                        maximumDate={maximumDate}
                     />
                     <CalenderHeader />
                     <Calender

@@ -120,6 +120,8 @@ export interface IUseGenerateId {
 export interface IDatePickerProps {
     today: Date | null;
     handlingPickDate?: (pickDate: string) => void;
+    minimumDate?: Date | null;
+    maximumDate?: Date | null;
 }
 
 export interface ICalenderProps {
@@ -135,6 +137,8 @@ export interface IStyledCalenderItemProps {
 export interface ICalenderNavProps {
     isMonthFirstDay: string;
     setIsMonthFirstDay: (changeMonth: string) => void;
+    minimumDate: Date | null;
+    maximumDate: Date | null;
 }
 
 export type statusColorType = {
@@ -166,4 +170,3 @@ export interface IHeaderReduxState {
         isLogin: boolean;
     };
 }
-
