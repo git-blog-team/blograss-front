@@ -74,7 +74,7 @@ export const StyledCommonTable = styled.div`
         }
     }
 `;
-const StyledNoData = styled.div`
+export const StyledNoData = styled.div`
     ${centerColumnStyles};
     position: absolute;
     top: calc(50% - 90px);
