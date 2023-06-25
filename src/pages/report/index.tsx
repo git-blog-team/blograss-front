@@ -163,7 +163,7 @@ export default function Report() {
         </StyledMain>
     );
 }
-const StyledStatusColor = styled.td<{ status: string }>`
+export const StyledStatusColor = styled.td<{ status: string }>`
     color: ${statusColor};
 `;
 const StyledMain = styled.div`
