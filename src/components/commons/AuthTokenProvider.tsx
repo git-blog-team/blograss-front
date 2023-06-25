@@ -5,9 +5,10 @@ import {
 } from '@/constants/api';
 import { ACCESSTOKEN_NOTEXPIRED } from '@/constants/responseMessage';
 import { updateUserData } from '@/store/userSlice';
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function AuthTokenProvider({
     children,
@@ -16,8 +17,11 @@ export default function AuthTokenProvider({
 }) {
     const dispatch = useDispatch();
     const router = useRouter();
+    const isToken =
+        !!Cookies.get('accessToken') && !!Cookies.get('refreshToken');
+    const isLogin = useSelector((state: any) => state.user.isLogin);
 
-    const { data } = useReactQuery({
+    const { data, refetch, isLoading } = useReactQuery({
         url: AUTH_TOKEN_REISSUE_API_URL,
         params: {},
         onError: (error: any) => {
@@ -54,6 +58,12 @@ export default function AuthTokenProvider({
             }),
         );
     }, [userData]);
+
+    useEffect(() => {
+        if (!isLoading) {
+            if (!isLogin) router.push('/login');
+        }
+    }, [router, isLogin]);
 
     return <>{children}</>;
 }
