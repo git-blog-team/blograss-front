@@ -9,8 +9,6 @@ import {
 } from '@/types/api';
 import qs from 'query-string';
 import { IMAGE_API_URL } from '@/constants/api';
-import Cookies from 'js-cookie';
-import { ACCESS_TOKEN } from '@/constants/common';
 
 const MutationMethod = {
     delete: 'delete',
@@ -21,11 +19,11 @@ const MutationMethod = {
 export const useReactQuery = (props: IUseReactQueryParams) => {
     const { url, renderLater, onError, params } = props;
 
-    const queryClient = useQueryClient();
+    // const queryClient = useQueryClient();
     const uniqueKey = url.split('/').slice(1) ?? [''];
     const [renderLaterState, setRenderLater] = useState(renderLater);
 
-    const { data, isFetching, error } = useQuery<
+    const { data, isFetching, error, refetch } = useQuery<
         any,
         AxiosError<{ details: string }>,
         any
@@ -46,9 +44,9 @@ export const useReactQuery = (props: IUseReactQueryParams) => {
             // 비동기로 query 하고싶을까바 만듦
         },
     );
-    const refetch = async () => {
-        await queryClient.invalidateQueries([...uniqueKey]);
-    };
+    // const refetch = async () => {
+    //     await queryClient.invalidateQueries([...uniqueKey]);
+    // };
     // 데이터 리패치기능 (수정삭제후 사용하셔유)
     const handleRenderLater = () => {
         setRenderLater(renderLater);
@@ -78,8 +76,10 @@ export const useReactQueryMutation =
             any
         >({
             mutationFn: async (variables: any, headers?: any) => {
-                return await axios[method](url, variables, { headers : headers});
-              },
+                return await axios[method](url, variables, {
+                    headers: headers,
+                });
+            },
             onSuccess,
             onError,
         });
@@ -93,15 +93,15 @@ export const useReactQueryDelete = useReactQueryMutation(MutationMethod.delete);
 export const useReactQueryPost = useReactQueryMutation(MutationMethod.post);
 export const useReactQueryPut = useReactQueryMutation(MutationMethod.put);
 
-export const fileUpload =async (formData :any): Promise<string[]> =>{
+export const fileUpload = async (formData: any): Promise<string[]> => {
     const headers = {
         'Content-Type': 'multipart/form-data',
     };
-    const data:{result : string[]} = await axios.post(
-       IMAGE_API_URL,
+    const data: { result: string[] } = await axios.post(
+        IMAGE_API_URL,
         formData,
-        {headers,},
+        { headers },
     );
 
-    return  data.result ?? []
-}
+    return data.result ?? [];
+};
