@@ -7,3 +7,4 @@ export const REPORT_API_URL = '/report';
 export const POST_LIST_API_URL = 'post/list';
 export const COMMENT_LIST_API_URL = 'comment/list';
 export const AUTH_TOKEN_REISSUE_API_URL = '/admin/reissue';
+export const GET_USER_DATA_API_URL = '/admin/userInfo';
