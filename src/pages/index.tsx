@@ -126,9 +126,7 @@ export default function Home() {
                             <label>
                                 <span>new</span>배너
                                 <CommonTable
-                                    isEmptyList={
-                                        !isLoading && !bannerData?.result
-                                    }
+                                    isEmptyList={false}
                                     headers={[
                                         { contents: 'NO.', width: '50px' },
                                         {

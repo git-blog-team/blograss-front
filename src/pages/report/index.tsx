@@ -42,23 +42,6 @@ export default function Report() {
     const router = useRouter();
     const { page } = router.query;
 
-    const onClickLogin = () => {
-        loginMutation(
-            { adminId: 'm71kr@naver.com', password: 'test1234' },
-            {
-                onSuccess: (res) => {
-                    const token = res.result[0].accessToken;
-                    Cookies.set(ACCESS_TOKEN, token);
-                    alert('로그인 성공쓰');
-                    refetch();
-                },
-                onError: (error) => {
-                    !!error.response && console.log(error.response);
-                },
-            },
-        );
-    };
-
     const { data, refetch } = useReactQuery({
         url: `${REPORT_API_URL}/${
             reportMenuState === 'Post'
@@ -82,9 +65,6 @@ export default function Report() {
 
     return (
         <StyledMain>
-            <button onClick={onClickLogin}>
-                로그인 버튼이지용 편의를위해남김요
-            </button>
             <StyledReportMenu reportMenuState={reportMenuState}>
                 <button onClick={onClickReportMenu('Post')}>
                     게시물 신고 목록
