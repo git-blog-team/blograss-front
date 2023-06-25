@@ -45,10 +45,8 @@ export default function AuthTokenProvider({
     }, [data]);
 
     useEffect(() => {
-        // if (data === undefined) return;
         dispatch(
             updateUserData({
-                // isLogin: true,
                 adminInfo: {
                     adminId: userData?.result[0].adminId,
                     adminName: userData?.result[0].adminName,
