@@ -21,8 +21,9 @@ export default function AuthTokenProvider({
         !!Cookies.get('accessToken') && !!Cookies.get('refreshToken');
     const isLogin = useSelector((state: any) => state.user.isLogin);
 
-    const { data, refetch, isLoading } = useReactQuery({
+    const { isLoading } = useReactQuery({
         url: AUTH_TOKEN_REISSUE_API_URL,
+        renderLater: !isToken,
         params: {},
         onError: (error: any) => {
             if (error.response?.data.message === ACCESSTOKEN_NOTEXPIRED) {
@@ -34,36 +35,30 @@ export default function AuthTokenProvider({
         },
     });
 
-    const { data: userData } = useReactQuery({
+    const { data: userData, isLoading: isLoadingUserData } = useReactQuery({
         url: GET_USER_DATA_API_URL,
+        renderLater: !isLogin,
         params: {},
     });
 
     useEffect(() => {
-        if (data === undefined) return;
-        dispatch(
-            updateUserData({
-                isLogin: true,
-            }),
-        );
-    }, [data]);
-
-    useEffect(() => {
-        dispatch(
-            updateUserData({
-                adminInfo: {
-                    adminId: userData?.result[0].adminId,
-                    adminName: userData?.result[0].adminName,
-                },
-            }),
-        );
+        if (userData) {
+            dispatch(
+                updateUserData({
+                    adminInfo: {
+                        adminId: userData?.result[0].adminId,
+                        adminName: userData?.result[0].adminName,
+                    },
+                }),
+            );
+        }
     }, [userData]);
 
     useEffect(() => {
-        if (!isLoading) {
-            if (!isLogin) router.push('/login');
+        if (!isLogin && !isLoading && !isLoadingUserData) {
+            if (router.pathname !== '/login') router.push('/login');
         }
-    }, [router, isLogin]);
+    }, [router.pathname, isLogin]);
 
     return <>{children}</>;
 }
