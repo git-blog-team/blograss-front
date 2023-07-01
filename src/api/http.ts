@@ -18,10 +18,14 @@ const MutationMethod = {
 
 export const useReactQuery = (props: IUseReactQueryParams) => {
     const { url, renderLater, onError, params } = props;
-
     // const queryClient = useQueryClient();
-    const uniqueKey = url.split('/').slice(1) ?? [''];
     const [renderLaterState, setRenderLater] = useState(renderLater);
+
+    const requestUrl =  !!url && !!params
+    ? `${url}?${qs.stringify(params as Record<string, number>)}`
+    : url
+
+    const uniqueKey = requestUrl.split('/').slice(1) ?? [''];
 
     const { data, isFetching, error, refetch } = useQuery<
         any,
@@ -31,9 +35,7 @@ export const useReactQuery = (props: IUseReactQueryParams) => {
         [...uniqueKey, params],
         async () => {
             const response = await axios.get(
-                !!url && !!params
-                    ? `${url}?${qs.stringify(params as Record<string, number>)}`
-                    : url,
+                requestUrl
             );
             return response;
         },

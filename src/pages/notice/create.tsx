@@ -24,6 +24,7 @@ export default function CreateNotice() {
     const router = useRouter();
     const noticeId = router.query.id;
     const isEdit = !!noticeId;
+
     const [editorContent, onChangeEditorContent] = useEditor('');
     const [title, setTitle] = useState('');
     const [dataContents, setDataContent] = useState('');
@@ -80,20 +81,27 @@ export default function CreateNotice() {
     const checkIsAnyFieldChange = () => {
         const { title: dataTitle, content: dataContent } =
             data?.result?.[0] ?? '';
-        const isNotChanged =
-            title === dataTitle && editorContent === dataContent;
+        const isNotChanged = editorContent
+            ? title === dataTitle && editorContent === dataContent
+            : title === dataTitle;
 
         return !isNotChanged as boolean;
     };
+
     const checkIsAllFieldFull = () => {
-        const isValid = !!title && !!editorContent;
+        let isValid = false;
+        if (isEdit) {
+            isValid = (!!title && (!!editorContent || dataContents)) as boolean;
+        } else {
+            isValid = !!title && !!editorContent;
+        }
 
         return isValid as boolean;
     };
 
     useEffect(() => {
         if (isEdit) {
-            handleIsValid(checkIsAllFieldFull() && checkIsAnyFieldChange());
+            handleIsValid(checkIsAnyFieldChange() && checkIsAllFieldFull());
         } else {
             handleIsValid(checkIsAllFieldFull());
         }
