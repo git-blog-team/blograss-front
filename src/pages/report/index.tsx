@@ -8,20 +8,19 @@ import {
     POST_LIST_API_URL,
     REPORT_API_URL,
 } from '@/constants/api';
-import { ACCESS_TOKEN, CREATED_AT, DESC } from '@/constants/common';
+import { CREATED_AT, DESC } from '@/constants/common';
 import { reportSortOptions, reportStatusOptions } from '@/constants/optioins';
 import { useDropdowns } from '@/hooks/commons';
 import {
     StyledCommonMenuTitle,
     StyledCommonWrapper,
+    StyledTopContents,
     statusColor,
 } from '@/styles/commons';
-import { normalRowStyles, spaceBetweenRowStyles } from '@/styles/flexModules';
 import { statusToWord } from '@/utils';
 import { dateToYYMMDD } from '@/utils/dateUtils';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import Cookies from 'js-cookie';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
 import { ChangeEvent, useState } from 'react';
@@ -167,24 +166,6 @@ const StyledMain = styled.div`
                         ${(props) => props.theme.colors.line_default};
                     cursor: pointer;
                 }
-            }
-        }
-    }
-`;
-const StyledTopContents = styled.div`
-    ${spaceBetweenRowStyles};
-    > div {
-        ${normalRowStyles}
-    }
-    ${StyledDropdown} {
-        margin: 0 10px 0 0;
-    }
-    ${StyledWrapperInput} {
-        width: 250px;
-        border-radius: 5px;
-        input {
-            ::placeholder {
-                font-size: 12px;
             }
         }
     }
