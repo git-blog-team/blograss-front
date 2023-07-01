@@ -7,17 +7,17 @@ import Footer from './Footer';
 import { useDispatch, useSelector } from 'react-redux';
 import { IHeaderReduxState } from '@/types/interfaces/commons';
 import useToast from '@/components/commons/ToastPopup';
-
 import { showToast } from '@/store/toast';
+import Login from '@/components/login';
 
 export default function Layout(props: { children: ReactNode }) {
     const { children } = props;
-    // const token = Cookies.get(TOKEN); // TODO: 추후 로그인 도입후 토큰유무로 사이드바 노출고려
     const { toastMessage, color } = useSelector(
         (state: IHeaderReduxState) => state.toast,
     );
     const dispatch = useDispatch();
     const { openToast, ToastComponent } = useToast(toastMessage);
+    const isLogin = useSelector((state: any) => state.user.isLogin);
 
     useEffect(() => {
         if (toastMessage) {
@@ -32,7 +32,13 @@ export default function Layout(props: { children: ReactNode }) {
         <StyledLayout>
             <Header />
             <TopNavigation />
-            <Body>{children}</Body>
+            {isLogin ? (
+                <Body>{children}</Body>
+            ) : (
+                <Body>
+                    <Login />
+                </Body>
+            )}
             <Footer />
             <ToastComponent color={color} />
         </StyledLayout>

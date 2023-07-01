@@ -5,8 +5,8 @@ export default function Footer() {
     return (
         <StyledFooter>
             <div>
-                <p>소재지 : 방구석</p>
-                <p>작업자 : 우진택 문혜민 조준영</p>
+                <p>프론트 : 문혜민 우진택 조준영</p>
+                <p>백엔드 : 김진성 최창서</p>
             </div>
         </StyledFooter>
     );
