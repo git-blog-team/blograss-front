@@ -1,8 +1,10 @@
 import { fileUpload } from '@/api/http';
 import { IMAGE_BASE_URL } from '@/constants/common';
+import { showToast } from '@/store/toast';
 import { centerColumnStyles } from '@/styles/flexModules';
 import styled from '@emotion/styled';
 import { ChangeEvent, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export default function Upload({
     imageId,
@@ -15,6 +17,7 @@ export default function Upload({
 }) {
     const [imageUrl, setImageUrl] = useState('');
     const fileRef = useRef<HTMLInputElement>(null);
+    const dispatch = useDispatch();
     const onClickUpload = () => {
         fileRef.current?.click();
     };
@@ -24,11 +27,21 @@ export default function Upload({
         const isOverSized = file[0]?.size > 10 * 1024 * 1024;
         const isValidFileType = file[0]?.type.startsWith('image/');
         if (!isValidFileType) {
-            alert('이미지 파일만 업로드하세요.');
+            dispatch(
+                showToast({
+                    toastMessage: '이미지 파일만 업로드하세요.',
+                    color: 'red',
+                }),
+            );
             return;
         }
         if (isOverSized) {
-            alert('10MB 이하의 파일로 업로드하세요.');
+            dispatch(
+                showToast({
+                    toastMessage: '10MB 이하의 파일로 업로드하세요.',
+                    color: 'red',
+                }),
+            );
             return;
         }
 

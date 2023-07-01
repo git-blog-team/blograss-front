@@ -14,6 +14,7 @@ import Cookies from 'js-cookie';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/common';
 import { updateUserData } from '@/store/userSlice';
 import { useDispatch } from 'react-redux';
+import { showToast } from '@/store/toast';
 
 export default function Login() {
     const router = useRouter();
@@ -79,7 +80,13 @@ export default function Login() {
                     router.push('/');
                 },
                 onError: (error) => {
-                    !!error.response && alert(error.response);
+                    !!error.response &&
+                        dispatch(
+                            showToast({
+                                toastMessage: error.response,
+                                color: 'red',
+                            }),
+                        );
                 },
             },
         );

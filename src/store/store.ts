@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './userSlice';
+import toast from './toast';
 export const store = configureStore({
     reducer: {
         // slice
         user: userReducer,
+        toast: toast,
     },
     devTools: process.env.NODE_ENV !== 'production',
 });
