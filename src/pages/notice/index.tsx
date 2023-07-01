@@ -1,16 +1,19 @@
 import { useReactQuery } from '@/api/http';
-import DropDown, { StyledDropdown } from '@/components/commons/DropDown';
-import Input, { StyledWrapperInput } from '@/components/commons/Input';
+import DropDown from '@/components/commons/DropDown';
+import Input from '@/components/commons/Input';
 import Pagination from '@/components/commons/Pagination';
 import CommonTable from '@/components/commons/Table';
 import { NOTICE_LIST_API_URL } from '@/constants/api';
 import { ASC, CREATED_AT, DESC } from '@/constants/common';
 import { NOTICE_CREATE_PAGE_URL } from '@/constants/utl';
 import { useDropdowns } from '@/hooks/commons';
-import { showToast } from '@/store/toast';
-import { StyledCommonMenuTitle, StyledCommonWrapper } from '@/styles/commons';
-import { normalRowStyles } from '@/styles/flexModules';
-import { spaceBetweenRowStyles } from '@/styles/flexModules';
+
+import {
+    StyledCommonMenuTitle,
+    StyledCommonWrapper,
+    StyledTopContents,
+} from '@/styles/commons';
+
 import { centerRowStyles } from '@/styles/flexModules';
 import { dateToYYMMDD } from '@/utils/dateUtils';
 import styled from '@emotion/styled';
@@ -25,8 +28,6 @@ export default function Notice() {
         sort: { label: '최신순', value: DESC },
     });
     const [keyWord, setKeyword] = useState('');
-    const dispatch = useDispatch();
-
     const router = useRouter();
     const { page } = router.query;
     const { data, isLoading } = useReactQuery({
@@ -122,24 +123,6 @@ const StyledNotice = styled.div`
                         width: 100%;
                     }
                 }
-            }
-        }
-    }
-`;
-const StyledTopContents = styled.div`
-    ${spaceBetweenRowStyles};
-    > div {
-        ${normalRowStyles}
-    }
-    ${StyledDropdown} {
-        margin: 0 10px 0 0;
-    }
-    ${StyledWrapperInput} {
-        width: 250px;
-        border-radius: 5px;
-        input {
-            ::placeholder {
-                font-size: 12px;
             }
         }
     }

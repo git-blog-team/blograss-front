@@ -1,7 +1,6 @@
 import { useReactQuery } from '@/api/http';
-import DropDown, { StyledDropdown } from '@/components/commons/DropDown';
+import DropDown from '@/components/commons/DropDown';
 import Input from '@/components/commons/Input';
-import { StyledWrapperInput } from '@/components/commons/Input';
 import Pagination from '@/components/commons/Pagination';
 import CommonTable from '@/components/commons/Table';
 import { BANNER_LIST_API_URL } from '@/constants/api';
@@ -12,18 +11,19 @@ import {
 } from '@/constants/optioins';
 import { BANNER_CREATE_PAGE_URL } from '@/constants/utl';
 import { useDropdowns } from '@/hooks/commons';
-import { StyledCommonMenuTitle, StyledCommonWrapper } from '@/styles/commons';
-import { normalRowStyles } from '@/styles/flexModules';
-import { spaceBetweenRowStyles } from '@/styles/flexModules';
+import {
+    StyledCommonMenuTitle,
+    StyledCommonWrapper,
+    StyledTopContents,
+} from '@/styles/commons';
 import { centerRowStyles } from '@/styles/flexModules';
-import { IHeaderReduxState } from '@/types/interfaces/commons';
+
 import { dateToYYMMDD } from '@/utils/dateUtils';
 import styled from '@emotion/styled';
 import _ from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ChangeEvent, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 export default function Banner() {
     const [dropdownStates, handleDropdowns] = useDropdowns({
@@ -139,24 +139,6 @@ const StyledNotice = styled.div`
                     > div {
                         width: 100%;
                     }
-                }
-            }
-        }
-    }
-`;
-const StyledTopContents = styled.div`
-    ${spaceBetweenRowStyles};
-    > div {
-        ${normalRowStyles}
-        ${StyledDropdown} {
-            margin: 0 10px 0 0;
-        }
-        ${StyledWrapperInput} {
-            width: 250px;
-            border-radius: 5px;
-            input {
-                ::placeholder {
-                    font-size: 12px;
                 }
             }
         }
