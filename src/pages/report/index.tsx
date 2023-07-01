@@ -1,5 +1,6 @@
 import { useReactQuery, useReactQueryPost } from '@/api/http';
-import DropDown from '@/components/commons/DropDown';
+import DropDown, { StyledDropdown } from '@/components/commons/DropDown';
+import Input, { StyledWrapperInput } from '@/components/commons/Input';
 import Pagination from '@/components/commons/Pagination';
 import CommonTable from '@/components/commons/Table';
 import {
@@ -23,7 +24,7 @@ import styled from '@emotion/styled';
 import Cookies from 'js-cookie';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 export default function Report() {
     const [reportMenuState, handleReportMenu] = useState('Post');
@@ -38,6 +39,7 @@ export default function Report() {
     const { mutation: loginMutation } = useReactQueryPost({
         url: '/admin/login',
     });
+    const [keyWord, setKeyword] = useState('');
 
     const router = useRouter();
     const { page } = router.query;
@@ -54,11 +56,13 @@ export default function Report() {
             status: dropdownStates.status.value ?? null,
             sortField: dropdownStates.sort.value.sortField ?? CREATED_AT,
             sortOrder: dropdownStates.sort.value.value ?? DESC,
-            search: null,
+            search: keyWord ?? null,
             rowCount: 10,
         },
     });
-
+    const onChangeKeyword = _.debounce((e: ChangeEvent<HTMLInputElement>) => {
+        setKeyword(e.target.value);
+    }, 500);
     const onClickReportMenu = (menu: string) => () => {
         handleReportMenu(menu);
     };
@@ -75,7 +79,7 @@ export default function Report() {
             </StyledReportMenu>
             <StyledCommonWrapper>
                 <StyledTopContents>
-                    <StyledCommonMenuTitle>공지사항 관리</StyledCommonMenuTitle>
+                    <StyledCommonMenuTitle>신고 관리</StyledCommonMenuTitle>
                     <div>
                         <DropDown
                             options={reportSortOptions}
@@ -88,6 +92,12 @@ export default function Report() {
                             value={dropdownStates.status}
                             name="status"
                             onChange={handleDropdowns}
+                        />
+                        <Input
+                            onChange={onChangeKeyword}
+                            height="38px"
+                            placeholder="게시물 유저 검색"
+                            isSearch={true}
                         />
                     </div>
                 </StyledTopContents>
@@ -165,9 +175,16 @@ const StyledTopContents = styled.div`
     ${spaceBetweenRowStyles};
     > div {
         ${normalRowStyles}
-        >div {
-            &:last-of-type {
-                margin: 0 0 0 10px;
+    }
+    ${StyledDropdown} {
+        margin: 0 10px 0 0;
+    }
+    ${StyledWrapperInput} {
+        width: 250px;
+        border-radius: 5px;
+        input {
+            ::placeholder {
+                font-size: 12px;
             }
         }
     }

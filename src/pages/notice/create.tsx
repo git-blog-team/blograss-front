@@ -12,6 +12,8 @@ import _ from 'lodash';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { useDispatch } from 'react-redux';
+import { showToast } from '@/store/toast';
 
 const EditorWrite = dynamic(
     async () => await import('@/components/commons/EditorWrite'),
@@ -31,6 +33,7 @@ export default function CreateNotice() {
     const { mutation: editNotice } = useReactQueryPut({
         url: NOTICE_API_URL,
     });
+    const [isValid, handleIsValid] = useState(false);
 
     const { data } = useReactQuery({
         url: NOTICE_API_URL,
@@ -39,7 +42,7 @@ export default function CreateNotice() {
             noticeId: noticeId,
         },
     });
-
+    const dispatch = useDispatch();
     const onClickSubmit = _.debounce(
         () => {
             const mutation = isEdit ? editNotice : createNotice;
@@ -53,7 +56,13 @@ export default function CreateNotice() {
 
             mutation(variables, {
                 onSuccess: () => {
-                    alert(`공지사항이 ${isEdit ? '수정' : '등록'}되었습니다.`);
+                    dispatch(
+                        showToast({
+                            toastMessage: `공지사항이 ${
+                                isEdit ? '수정' : '등록'
+                            }되었습니다.`,
+                        }),
+                    );
                     router.push(NOTICE_PAGE_URL);
                 },
             });
@@ -67,6 +76,28 @@ export default function CreateNotice() {
         setTitle(title);
         setDataContent(content);
     }, [data]);
+
+    const checkIsAnyFieldChange = () => {
+        const { title: dataTitle, content: dataContent } =
+            data?.result?.[0] ?? '';
+        const isNotChanged =
+            title === dataTitle && editorContent === dataContent;
+
+        return !isNotChanged as boolean;
+    };
+    const checkIsAllFieldFull = () => {
+        const isValid = !!title && !!editorContent;
+
+        return isValid as boolean;
+    };
+
+    useEffect(() => {
+        if (isEdit) {
+            handleIsValid(checkIsAllFieldFull() && checkIsAnyFieldChange());
+        } else {
+            handleIsValid(checkIsAllFieldFull());
+        }
+    }, [title, editorContent]);
 
     return (
         <StyledCreateNotice>
@@ -104,7 +135,7 @@ export default function CreateNotice() {
                             onChange={onChangeEditorContent}
                         />
                     )}
-                    <Button onClick={onClickSubmit} disabled={!editorContent}>
+                    <Button onClick={onClickSubmit} disabled={!isValid}>
                         {isEdit ? '수정하기' : '등록하기'}
                     </Button>
                 </StyledContents>
@@ -120,9 +151,10 @@ const StyledContents = styled.div`
     ${StyledWrapperInput} {
         border-radius: 5px;
         margin: 10px 3px;
-        width: 950px;
+        width: 930px;
     }
     ${StyledButton} {
         width: 300px;
+        margin: 15px 0 0 0;
     }
 `;

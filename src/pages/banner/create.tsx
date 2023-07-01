@@ -12,6 +12,7 @@ import { bannerTypeOptions } from '@/constants/optioins';
 
 import { BANNER_PAGE_URL } from '@/constants/utl';
 import { useDropdowns } from '@/hooks/commons';
+import { showToast } from '@/store/toast';
 import { StyledCommonMenuTitle, StyledCommonWrapper } from '@/styles/commons';
 import {
     ColumnFlexStartCenter,
@@ -23,18 +24,20 @@ import _ from 'lodash';
 
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { ValueType } from 'react-select';
 
 export default function BannerCreate() {
     const router = useRouter();
     const bannerId = router.query.id;
     const isEdit = !!bannerId;
+    const dispatch = useDispatch();
     const [dropdownStates, handleDropdowns] = useDropdowns({
         bannerType: { label: '배너타입을 입력하세요', value: '' },
     });
     const [bannerName, setBannerName] = useState('');
     const [dates, setDates] = useState({ start: null, end: null });
-    const [isValid, setIsValid] = useState(false);
+    const [isValid, handleIsValid] = useState(false);
     const [imageId, setImageId] = useState('');
     const [endDateError, handleEndDateError] = useState('');
 
@@ -77,7 +80,14 @@ export default function BannerCreate() {
 
             mutation(variables, {
                 onSuccess: () => {
-                    alert(`배너${isEdit ? '수정' : '등록'}되었습니다.`);
+                    dispatch(
+                        showToast({
+                            toastMessage: `배너${
+                                isEdit ? '수정' : '등록'
+                            }되었습니다.`,
+                        }),
+                    );
+
                     router.push(BANNER_PAGE_URL);
                 },
             });
@@ -100,6 +110,43 @@ export default function BannerCreate() {
             handleImageId(imageId);
         }
     }, [data]);
+
+    const checkIsAllFieldFull = () => {
+        const isValid =
+            !!bannerName &&
+            !!imageId &&
+            dates.start &&
+            dates.end &&
+            dropdownStates.bannerType.value;
+
+        return isValid as boolean;
+    };
+    const checkIsAnyFieldChange = () => {
+        const {
+            bannerName: dataBannerName,
+            bannerType,
+            endedAt,
+            imageId,
+            startedAt,
+        } = data?.result?.[0] ?? '';
+
+        const isNotChanged =
+            bannerName === dataBannerName &&
+            imageId === imageId &&
+            dates.start === startedAt &&
+            dates.end === endedAt &&
+            dropdownStates.bannerType.value === bannerType;
+
+        return !isNotChanged as boolean;
+    };
+
+    useEffect(() => {
+        if (isEdit) {
+            handleIsValid(checkIsAllFieldFull() && checkIsAnyFieldChange());
+        } else {
+            handleIsValid(checkIsAllFieldFull());
+        }
+    }, [bannerName, imageId, dates, dropdownStates]);
 
     return (
         <StyledCreateNotice>

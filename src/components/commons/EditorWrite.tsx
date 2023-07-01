@@ -5,11 +5,13 @@ import { type EditorOptions } from '@/types/interfaces/commons';
 
 import { HookCallback } from '@toast-ui/editor/types/editor';
 import axios from '../../api/middlewares';
+import { useDispatch } from 'react-redux';
+import { showToast } from '@/store/toast';
 
 export default function EditorWrite(options: EditorOptions) {
     const { height = '400px', type, initialValue = ' ', onChange } = options;
     const contentRef = useRef<Editor>(null);
-
+    const dispatch = useDispatch();
     const imgUpload = async (file: File, callback: HookCallback) => {
         const formData = new FormData();
         formData.append('file', file);
@@ -23,7 +25,12 @@ export default function EditorWrite(options: EditorOptions) {
                 callback(result, 'alt_text');
             })
             .catch((error) => {
-                alert(error);
+                dispatch(
+                    showToast({
+                        toastMessage: error,
+                        color: 'red',
+                    }),
+                );
             });
     };
 

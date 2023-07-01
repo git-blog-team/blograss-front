@@ -151,6 +151,9 @@ export type statusColorType = {
     };
 };
 
+export interface IToastInitialState {
+    toastMessage: string;
+}
 export interface IUserInitialState {
     accessToken?: string;
     refreshToken?: string;
@@ -168,5 +171,9 @@ export interface IHeaderReduxState {
             adminName: string;
         };
         isLogin: boolean;
+    };
+    toast: {
+        toastMessage: string;
+        color?: string;
     };
 }

@@ -1,11 +1,13 @@
 import { useReactQuery } from '@/api/http';
-import DropDown from '@/components/commons/DropDown';
+import DropDown, { StyledDropdown } from '@/components/commons/DropDown';
+import Input, { StyledWrapperInput } from '@/components/commons/Input';
 import Pagination from '@/components/commons/Pagination';
 import CommonTable from '@/components/commons/Table';
 import { NOTICE_LIST_API_URL } from '@/constants/api';
 import { ASC, CREATED_AT, DESC } from '@/constants/common';
 import { NOTICE_CREATE_PAGE_URL } from '@/constants/utl';
 import { useDropdowns } from '@/hooks/commons';
+import { showToast } from '@/store/toast';
 import { StyledCommonMenuTitle, StyledCommonWrapper } from '@/styles/commons';
 import { normalRowStyles } from '@/styles/flexModules';
 import { spaceBetweenRowStyles } from '@/styles/flexModules';
@@ -15,24 +17,31 @@ import styled from '@emotion/styled';
 import _ from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { ChangeEvent, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export default function Notice() {
     const [dropdownStates, handleDropdowns] = useDropdowns({
         sort: { label: '최신순', value: DESC },
     });
+    const [keyWord, setKeyword] = useState('');
+    const dispatch = useDispatch();
 
     const router = useRouter();
     const { page } = router.query;
     const { data, isLoading } = useReactQuery({
         url: NOTICE_LIST_API_URL,
         params: {
-            search: null,
+            search: keyWord ?? null,
             sortField: CREATED_AT,
             sortOrder: dropdownStates.sort.value,
             page: page ?? 1,
             rowCount: 10,
         },
     });
+    const onChangeKeyword = _.debounce((e: ChangeEvent<HTMLInputElement>) => {
+        setKeyword(e.target.value);
+    }, 500);
 
     return (
         <StyledNotice>
@@ -48,6 +57,12 @@ export default function Notice() {
                             value={dropdownStates.sort}
                             name="sort"
                             onChange={handleDropdowns}
+                        />
+                        <Input
+                            onChange={onChangeKeyword}
+                            height="38px"
+                            placeholder="공지사항 제목 검색"
+                            isSearch={true}
                         />
                         <Link href={NOTICE_CREATE_PAGE_URL}>
                             <StyledLink>작성하기</StyledLink>
@@ -115,6 +130,18 @@ const StyledTopContents = styled.div`
     ${spaceBetweenRowStyles};
     > div {
         ${normalRowStyles}
+    }
+    ${StyledDropdown} {
+        margin: 0 10px 0 0;
+    }
+    ${StyledWrapperInput} {
+        width: 250px;
+        border-radius: 5px;
+        input {
+            ::placeholder {
+                font-size: 12px;
+            }
+        }
     }
 `;
 
