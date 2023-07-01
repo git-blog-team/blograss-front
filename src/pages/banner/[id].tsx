@@ -7,16 +7,19 @@ import {
     IMAGE_BASE_URL,
 } from '@/constants/common';
 import { BANNER_CREATE_PAGE_URL, BANNER_PAGE_URL } from '@/constants/utl';
+import { showToast } from '@/store/toast';
 import { StyledCommonMenuTitle, StyledCommonWrapper } from '@/styles/commons';
 import { normalRowStyles } from '@/styles/flexModules';
 import { dateToYYMMDD } from '@/utils/dateUtils';
 import styled from '@emotion/styled';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
 
 export default function BannerDetail() {
     const router = useRouter();
     const { id } = router.query;
+    const dispatch = useDispatch();
     const { data } = useReactQuery({
         url: BANNER_API_URL,
         renderLater: !id,
@@ -56,7 +59,11 @@ export default function BannerDetail() {
                 },
                 {
                     onSuccess: () => {
-                        alert('배너가 삭제되었습니다.');
+                        dispatch(
+                            showToast({
+                                toastMessage: '배너가 삭제되었습니다.',
+                            }),
+                        );
                         router.push(BANNER_PAGE_URL);
                     },
                     onError: (err) => console.log(err),

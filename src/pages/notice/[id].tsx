@@ -10,6 +10,8 @@ import Button, { StyledButton } from '@/components/commons/Button';
 import { NOTICE_CREATE_PAGE_URL, NOTICE_PAGE_URL } from '@/constants/utl';
 import _ from 'lodash';
 import { DEBOUNCE_OPTION, DEBOUNCE_TIME } from '@/constants/common';
+import { showToast } from '@/store/toast';
+import { useDispatch } from 'react-redux';
 
 const EditorRead = dynamic(
     async () => await import('@/components/commons/EditorRead'),
@@ -20,6 +22,7 @@ const EditorRead = dynamic(
 
 export default function NoticeDetailPage() {
     const router = useRouter();
+    const dispatch = useDispatch();
     const { id } = router.query;
     const { data } = useReactQuery({
         url: NOTICE_API_URL,
@@ -52,7 +55,12 @@ export default function NoticeDetailPage() {
                 },
                 {
                     onSuccess: () => {
-                        alert('공지가 삭제되었습니다.');
+                        dispatch(
+                            showToast({
+                                toastMessage: '공지가 삭제되었습니다.',
+                            }),
+                        );
+
                         router.push(NOTICE_PAGE_URL);
                     },
                     onError: (err) => console.log(err),

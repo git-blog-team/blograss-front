@@ -1,6 +1,8 @@
+import { showToast } from '@/store/toast';
 import { type ICalenderNavProps } from '@/types/interfaces/commons';
 import { YYMMDDToYYMM, dateToYYMM01, isBetweenDate } from '@/utils/dateUtils';
 import styled from '@emotion/styled';
+import { useDispatch } from 'react-redux';
 
 export default function CalenderNav({
     isMonthFirstDay,
@@ -8,6 +10,7 @@ export default function CalenderNav({
     minimumDate,
     maximumDate,
 }: ICalenderNavProps) {
+    const dispatch = useDispatch();
     const handleCalenderMonth = (type: string) => {
         const date = new Date(isMonthFirstDay);
         switch (type) {
@@ -21,7 +24,12 @@ export default function CalenderNav({
         if (isBetweenDate(date, minimumDate, maximumDate)) {
             setIsMonthFirstDay(dateToYYMM01(date));
         } else {
-            alert('범위를 벗어난 날짜입니다.');
+            dispatch(
+                showToast({
+                    toastMessage: '범위를 벗어난 날짜입니다.',
+                    color: 'red',
+                }),
+            );
         }
     };
 

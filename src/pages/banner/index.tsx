@@ -2,6 +2,7 @@ import { useReactQuery } from '@/api/http';
 import DropDown, { StyledDropdown } from '@/components/commons/DropDown';
 import Input from '@/components/commons/Input';
 import { StyledWrapperInput } from '@/components/commons/Input';
+import Pagination from '@/components/commons/Pagination';
 import CommonTable from '@/components/commons/Table';
 import { BANNER_LIST_API_URL } from '@/constants/api';
 import { CREATED_AT, DESC } from '@/constants/common';
@@ -15,11 +16,14 @@ import { StyledCommonMenuTitle, StyledCommonWrapper } from '@/styles/commons';
 import { normalRowStyles } from '@/styles/flexModules';
 import { spaceBetweenRowStyles } from '@/styles/flexModules';
 import { centerRowStyles } from '@/styles/flexModules';
+import { IHeaderReduxState } from '@/types/interfaces/commons';
 import { dateToYYMMDD } from '@/utils/dateUtils';
 import styled from '@emotion/styled';
 import _ from 'lodash';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { ChangeEvent, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 export default function Banner() {
     const [dropdownStates, handleDropdowns] = useDropdowns({
@@ -29,8 +33,10 @@ export default function Banner() {
         },
         bannerType: { label: '배너타입 전체', value: '' },
     });
-    const [keyWord, setKeyword] = useState('');
 
+    const [keyWord, setKeyword] = useState('');
+    const router = useRouter();
+    const { page } = router.query;
     const { data, isLoading } = useReactQuery({
         url: BANNER_LIST_API_URL,
         params: {
@@ -38,7 +44,7 @@ export default function Banner() {
             bannerType: dropdownStates.bannerType.value ?? null,
             sortField: dropdownStates.sort.value.sortField ?? CREATED_AT,
             sortOrder: dropdownStates.sort.value.value ?? DESC,
-            page: 1,
+            page: page ?? 1,
             rowCount: 10,
         },
     });
@@ -50,7 +56,7 @@ export default function Banner() {
         <StyledNotice>
             <StyledCommonWrapper>
                 <StyledTopContents>
-                    <StyledCommonMenuTitle>공지사항 관리</StyledCommonMenuTitle>
+                    <StyledCommonMenuTitle>배너 관리</StyledCommonMenuTitle>
                     <div>
                         <DropDown
                             options={bannerTypeFilterOptions}
@@ -67,7 +73,7 @@ export default function Banner() {
                         <Input
                             onChange={onChangeKeyword}
                             height="38px"
-                            placeholder="검색어를 입력하세요."
+                            placeholder="배너제목 검색"
                             isSearch={true}
                         />
                         <Link href={BANNER_CREATE_PAGE_URL}>
@@ -103,12 +109,20 @@ export default function Banner() {
                         ))}
                     </>
                 </CommonTable>
+                {data?.count && (
+                    <Pagination
+                        totalItems={data.count}
+                        itemsPerPage={10}
+                        pagesPerBlock={10}
+                        currentPage={Number(page)}
+                    />
+                )}
             </StyledCommonWrapper>
         </StyledNotice>
     );
 }
 const StyledNotice = styled.div`
-    > div > div:last-of-type {
+    > div > div:nth-of-type(2) {
         height: 600px;
         width: 100%;
         tbody > tr > td {
