@@ -5,7 +5,6 @@ import {
     type ValueTypeObject,
 } from '@/types/interfaces/commons';
 import { type ValueType } from 'react-select';
-import { useDispatch } from 'react-redux';
 
 export const useDropdowns = (initialvalue: ValueTypeObject) => {
     const [state, setState] = useState(initialvalue);
@@ -56,4 +55,3 @@ export const useGenerateId = ({
     const postfixString = postfix !== '' ? `-${postfix}` : '';
     return `${prefixString}${useId()}${postfixString}`;
 };
-
