@@ -52,11 +52,6 @@ export default function Login() {
         setIsShowPasswordWarning(validatePasswordLength(target.value));
     };
 
-    /**
-     * secretKey는 어드민 회원가입 시 필요한 키값입니다.
-     * @param event
-     */
-
     const onSubmitLogin = (event: FormEvent) => {
         event.preventDefault();
         loginMutation(

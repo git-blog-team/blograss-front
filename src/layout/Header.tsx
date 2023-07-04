@@ -16,7 +16,7 @@ export default function Header() {
     );
     const dispatch = useDispatch();
 
-    const { mutation: logoutMutation, isLoading } = useReactQueryDelete({
+    const { mutation: logoutMutation } = useReactQueryDelete({
         url: '/admin/logout',
         onSuccess: () => {
             dispatch(initUserData());

@@ -1,6 +1,6 @@
 import { useReactQuery, useReactQueryPost } from '@/api/http';
-import DropDown, { StyledDropdown } from '@/components/commons/DropDown';
-import Input, { StyledWrapperInput } from '@/components/commons/Input';
+import DropDown from '@/components/commons/DropDown';
+import Input from '@/components/commons/Input';
 import Pagination from '@/components/commons/Pagination';
 import CommonTable from '@/components/commons/Table';
 import {
